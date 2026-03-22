@@ -3,9 +3,11 @@ import {
   BarChart3,
   CheckCircle2,
   ChevronRight,
+  Copy,
   EyeOff,
   Github,
   Globe,
+  Heart,
   Lock,
   Search,
   Shield,
@@ -14,11 +16,15 @@ import {
   Twitter,
 } from "lucide-react";
 import { motion } from "motion/react";
+import { useState } from "react";
 import type { Page } from "../App";
 
 interface LandingPageProps {
   onNavigate: (page: Page) => void;
 }
+
+const ICP_ADDRESS =
+  "416c602ad9431e5c54158097c181a8268c72de7704f8276d6d13e7e4f4207150";
 
 const features = [
   {
@@ -71,6 +77,15 @@ const steps = [
 const navLinks = ["Features", "How It Works", "Dashboard", "About"];
 
 export default function LandingPage({ onNavigate }: LandingPageProps) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(ICP_ADDRESS).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Nav */}
@@ -561,6 +576,62 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
         </div>
       </section>
 
+      {/* Support Cloaked — ICP donation */}
+      <section className="border-t border-border py-20">
+        <div className="max-w-2xl mx-auto px-6 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+          >
+            <div className="w-12 h-12 rounded-xl bg-amber-brand/10 border border-amber-brand/25 flex items-center justify-center mx-auto mb-5">
+              <Heart
+                className="w-6 h-6"
+                style={{ color: "oklch(0.62 0.14 62)" }}
+              />
+            </div>
+            <h2 className="font-fraunces font-black text-3xl text-foreground mb-3">
+              Support Cloaked
+            </h2>
+            <p className="text-muted-foreground font-figtree text-sm leading-relaxed mb-8 max-w-lg mx-auto">
+              Cloaked is free and always will be. If it helped you reclaim a
+              piece of your privacy, consider sending a small ICP donation.
+              Every contribution keeps this project independent.
+            </p>
+
+            <div className="bg-card border border-border rounded-2xl p-6 text-left shadow-card">
+              <p className="text-xs text-muted-foreground font-figtree mb-2 uppercase tracking-widest font-semibold">
+                ICP Wallet Address
+              </p>
+              <div className="flex items-center gap-3">
+                <code className="flex-1 text-xs font-mono text-foreground bg-secondary rounded-lg px-3 py-2.5 break-all leading-relaxed">
+                  {ICP_ADDRESS}
+                </code>
+                <button
+                  type="button"
+                  onClick={handleCopy}
+                  className="flex-shrink-0 w-9 h-9 rounded-lg border border-border bg-secondary hover:bg-forest/15 hover:border-forest/40 flex items-center justify-center transition-colors"
+                  aria-label="Copy ICP address"
+                >
+                  <Copy className="w-4 h-4 text-muted-foreground" />
+                </button>
+              </div>
+              {copied && (
+                <p className="text-xs text-forest font-figtree mt-2 flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  Address copied to clipboard
+                </p>
+              )}
+              <p className="text-xs text-muted-foreground font-figtree mt-4 leading-relaxed">
+                Send ICP using any compatible wallet (Plug, NFID, etc.).
+                Donations are voluntary and non-refundable.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="border-t border-border">
         <div className="max-w-7xl mx-auto px-6 py-16">
@@ -661,6 +732,14 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
               </a>
             </p>
             <div className="flex gap-6">
+              <button
+                type="button"
+                onClick={handleCopy}
+                className="text-xs text-muted-foreground font-figtree hover:text-forest transition-colors flex items-center gap-1"
+              >
+                <Heart className="w-3 h-3" />
+                Support with ICP
+              </button>
               <button
                 type="button"
                 onClick={() => onNavigate("privacy")}
