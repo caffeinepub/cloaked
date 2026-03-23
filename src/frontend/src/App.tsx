@@ -206,6 +206,9 @@ export default function App() {
                   Report violations: 1-888-404-3922
                 </span>
               </p>
+              <p className="text-xs text-[oklch(0.55_0_0)]">
+                Records stored permanently on the Internet Computer (ICP).
+              </p>
             </div>
             <div className="text-xs text-[oklch(0.55_0_0)] text-right flex flex-col items-end gap-1.5">
               <button

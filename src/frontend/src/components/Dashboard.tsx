@@ -122,7 +122,9 @@ export function Dashboard({
               >
                 iNaturalist
               </a>{" "}
-              combined with community field reports.
+              combined with community field reports. All records are stored
+              permanently on the Internet Computer — a decentralized network
+              owned by no single company.
             </p>
           </div>
 
