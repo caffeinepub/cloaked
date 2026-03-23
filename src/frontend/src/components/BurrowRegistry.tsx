@@ -28,7 +28,14 @@ import type {
   LandUse,
   ThreatLevel,
 } from "@/data/burrows";
-import { Eye, Pencil, Plus, Search, SlidersHorizontal } from "lucide-react";
+import {
+  ExternalLink,
+  Eye,
+  Pencil,
+  Plus,
+  Search,
+  SlidersHorizontal,
+} from "lucide-react";
 import { useMemo, useState } from "react";
 import { BurrowModal } from "./BurrowModal";
 import { StatusBadge } from "./StatusBadge";
@@ -45,6 +52,7 @@ interface Props {
 type StatusFilter = "All" | BurrowStatus;
 type ThreatFilter = "All" | ThreatLevel;
 type LandFilter = "All" | LandUse;
+type SourceFilter = "All" | "iNaturalist" | "community";
 
 export function BurrowRegistry({
   burrows,
@@ -56,7 +64,8 @@ export function BurrowRegistry({
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("All");
   const [threatFilter, setThreatFilter] = useState<ThreatFilter>("All");
-  const [landFilter, setLandFilter] = useState<LandFilter>("All");
+  const [landFilter, _setLandFilter] = useState<LandFilter>("All");
+  const [sourceFilter, setSourceFilter] = useState<SourceFilter>("All");
   const [modalOpen, setModalOpen] = useState(false);
   const [editTarget, setEditTarget] = useState<Burrow | null>(null);
   const [viewTarget, setViewTarget] = useState<Burrow | null>(null);
@@ -67,6 +76,10 @@ export function BurrowRegistry({
       if (threatFilter !== "All" && b.threatLevel !== threatFilter)
         return false;
       if (landFilter !== "All" && b.landUse !== landFilter) return false;
+      if (sourceFilter !== "All") {
+        const src = b.source ?? "community";
+        if (src !== sourceFilter) return false;
+      }
       if (search) {
         const q = search.toLowerCase();
         return (
@@ -77,7 +90,7 @@ export function BurrowRegistry({
       }
       return true;
     });
-  }, [burrows, statusFilter, threatFilter, landFilter, search]);
+  }, [burrows, statusFilter, threatFilter, landFilter, sourceFilter, search]);
 
   const handleEdit = (b: Burrow) => {
     setEditTarget(b);
@@ -132,6 +145,23 @@ export function BurrowRegistry({
             </div>
 
             <Select
+              value={sourceFilter}
+              onValueChange={(v) => setSourceFilter(v as SourceFilter)}
+            >
+              <SelectTrigger
+                className="w-40"
+                data-ocid="registry.source_filter"
+              >
+                <SelectValue placeholder="Source" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="All">All Sources</SelectItem>
+                <SelectItem value="iNaturalist">iNaturalist</SelectItem>
+                <SelectItem value="community">Community</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Select
               value={statusFilter}
               onValueChange={(v) => setStatusFilter(v as StatusFilter)}
             >
@@ -163,37 +193,6 @@ export function BurrowRegistry({
               </SelectContent>
             </Select>
 
-            <Select
-              value={landFilter}
-              onValueChange={(v) => setLandFilter(v as LandFilter)}
-            >
-              <SelectTrigger className="w-48">
-                <SelectValue placeholder="Land Use" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="All">All Land Use</SelectItem>
-                <SelectItem value="NASA-KSC">NASA-KSC</SelectItem>
-                <SelectItem value="SpaceX">SpaceX</SelectItem>
-                <SelectItem value="Patrick SFB">Patrick SFB</SelectItem>
-                <SelectItem value="Private Development">
-                  Private Development
-                </SelectItem>
-                <SelectItem value="Other">Other</SelectItem>
-                <SelectItem value="Harris/L3T">
-                  Harris / L3T (Melbourne)
-                </SelectItem>
-                <SelectItem value="Northrop Grumman">
-                  Northrop Grumman
-                </SelectItem>
-                <SelectItem value="Collins Aerospace">
-                  Collins Aerospace
-                </SelectItem>
-                <SelectItem value="Melbourne Airport Area">
-                  Melbourne Airport Area
-                </SelectItem>
-              </SelectContent>
-            </Select>
-
             <div className="relative flex-1 min-w-48">
               <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
               <Input
@@ -222,7 +221,7 @@ export function BurrowRegistry({
                     Location
                   </TableHead>
                   <TableHead className="text-xs font-semibold uppercase tracking-wider hidden sm:table-cell">
-                    Coordinates
+                    Source
                   </TableHead>
                   <TableHead className="text-xs font-semibold uppercase tracking-wider">
                     Status
@@ -236,9 +235,6 @@ export function BurrowRegistry({
                   <TableHead className="text-xs font-semibold uppercase tracking-wider hidden lg:table-cell">
                     Documented
                   </TableHead>
-                  <TableHead className="text-xs font-semibold uppercase tracking-wider hidden lg:table-cell">
-                    Last Verified
-                  </TableHead>
                   <TableHead className="text-xs font-semibold uppercase tracking-wider">
                     Actions
                   </TableHead>
@@ -248,7 +244,7 @@ export function BurrowRegistry({
                 {filtered.length === 0 ? (
                   <TableRow>
                     <TableCell
-                      colSpan={9}
+                      colSpan={8}
                       className="py-12 text-center text-muted-foreground"
                       data-ocid="registry.empty_state"
                     >
@@ -256,10 +252,6 @@ export function BurrowRegistry({
                         <Search className="w-8 h-8 opacity-30" />
                         <p className="text-sm">
                           No burrow records match your current filters.
-                        </p>
-                        <p className="text-xs">
-                          Try adjusting the status, threat level, or land use
-                          filters.
                         </p>
                       </div>
                     </TableCell>
@@ -279,8 +271,21 @@ export function BurrowRegistry({
                           {b.locationDescription}
                         </span>
                       </TableCell>
-                      <TableCell className="font-mono text-xs text-muted-foreground hidden sm:table-cell">
-                        {b.latitude.toFixed(4)}, {b.longitude.toFixed(4)}
+                      <TableCell className="hidden sm:table-cell">
+                        {b.source === "iNaturalist" ? (
+                          <a
+                            href={b.inatUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[oklch(0.90_0.08_250)] text-[oklch(0.35_0.10_250)] border border-[oklch(0.75_0.08_250)] hover:opacity-80"
+                          >
+                            iNaturalist <ExternalLink className="w-2.5 h-2.5" />
+                          </a>
+                        ) : (
+                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[oklch(0.90_0.08_155)] text-[oklch(0.35_0.08_155)] border border-[oklch(0.75_0.08_155)]">
+                            Community
+                          </span>
+                        )}
                       </TableCell>
                       <TableCell>
                         <StatusBadge status={b.status} />
@@ -294,9 +299,6 @@ export function BurrowRegistry({
                       <TableCell className="text-xs text-muted-foreground hidden lg:table-cell">
                         {b.dateDocumented}
                       </TableCell>
-                      <TableCell className="text-xs text-muted-foreground hidden lg:table-cell">
-                        {b.lastVerified}
-                      </TableCell>
                       <TableCell>
                         <div className="flex gap-1">
                           <button
@@ -308,7 +310,7 @@ export function BurrowRegistry({
                           >
                             <Eye className="w-3.5 h-3.5" />
                           </button>
-                          {adminEnabled && (
+                          {adminEnabled && b.source !== "iNaturalist" && (
                             <button
                               type="button"
                               onClick={() => handleEdit(b)}
@@ -356,11 +358,29 @@ export function BurrowRegistry({
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[oklch(0.92_0.020_155)] text-[oklch(0.35_0.040_155)] border border-[oklch(0.78_0.030_155)]">
                     {viewTarget.landUse}
                   </span>
+                  {viewTarget.source === "iNaturalist" &&
+                    viewTarget.inatUrl && (
+                      <a
+                        href={viewTarget.inatUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[oklch(0.90_0.08_250)] text-[oklch(0.35_0.10_250)] border border-[oklch(0.75_0.08_250)] hover:opacity-80"
+                      >
+                        View on iNaturalist <ExternalLink className="w-3 h-3" />
+                      </a>
+                    )}
                 </div>
                 <div className="text-xs text-muted-foreground font-mono">
                   {viewTarget.latitude.toFixed(5)},{" "}
                   {viewTarget.longitude.toFixed(5)}
                 </div>
+                {viewTarget.photoFilename && (
+                  <img
+                    src={viewTarget.photoFilename}
+                    alt="Burrow observation"
+                    className="rounded-md max-h-48 object-cover border border-border w-full"
+                  />
+                )}
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   {viewTarget.notes}
                 </p>

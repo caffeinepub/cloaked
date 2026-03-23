@@ -11,6 +11,7 @@ import {
 import type { Burrow } from "@/data/burrows";
 import {
   CheckCircle2,
+  ExternalLink,
   ListTree,
   MapPin,
   Pencil,
@@ -30,34 +31,8 @@ interface Props {
   onEdit: (b: Burrow) => void;
   adminEnabled: boolean;
   nextId: string;
+  inatLoading?: boolean;
 }
-
-const fieldObservations = [
-  {
-    img: "/assets/generated/tortoise-scrub.dim_600x400.jpg",
-    caption: "Adult tortoise observed at SCB-001 apron",
-    meta: "Jan 8, 2025 · NASA-KSC buffer",
-    by: "R. Alvarez",
-  },
-  {
-    img: "/assets/generated/burrow-entrance.dim_600x400.jpg",
-    caption: "Fresh burrow entrance with sand apron, SCB-008",
-    meta: "Feb 28, 2025 · LC-39 scrub",
-    by: "S. Patel",
-  },
-  {
-    img: "/assets/generated/scrub-habitat-aerial.dim_600x400.jpg",
-    caption: "Scrub habitat corridor, Merritt Island NWR",
-    meta: "Jan 30, 2025 · Merritt Island",
-    by: "S. Patel",
-  },
-  {
-    img: "/assets/generated/indigo-snake.dim_600x400.jpg",
-    caption: "Eastern indigo snake at burrow entrance SCB-005",
-    meta: "Jan 30, 2025 · Merritt Island NWR",
-    by: "S. Patel",
-  },
-];
 
 export function Dashboard({
   burrows,
@@ -65,6 +40,7 @@ export function Dashboard({
   onEdit,
   adminEnabled,
   nextId,
+  inatLoading,
 }: Props) {
   const [modalOpen, setModalOpen] = useState(false);
   const [editTarget, setEditTarget] = useState<Burrow | null>(null);
@@ -72,13 +48,9 @@ export function Dashboard({
   const total = burrows.length;
   const active = burrows.filter((b) => b.status === "Active").length;
   const highThreat = burrows.filter((b) => b.threatLevel === "High").length;
-  const verifiedThisMonth = burrows.filter((b) => {
-    const d = new Date(b.lastVerified);
-    const now = new Date();
-    return (
-      d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear()
-    );
-  }).length;
+  const communityCount = burrows.filter(
+    (b) => b.source === "community" || !b.source,
+  ).length;
 
   const recentFive = [...burrows]
     .sort((a, b) => b.dateDocumented.localeCompare(a.dateDocumented))
@@ -95,35 +67,32 @@ export function Dashboard({
   };
 
   const handleSave = (b: Burrow) => {
-    if (editTarget) {
-      onEdit(b);
-    } else {
-      onAdd(b);
-    }
+    if (editTarget) onEdit(b);
+    else onAdd(b);
   };
 
   const kpis = [
     {
-      label: "Total Burrows",
-      value: total,
+      label: "Total Records",
+      value: inatLoading ? "..." : total,
       icon: <ListTree className="w-5 h-5" />,
       color: "text-[oklch(var(--primary))]",
     },
     {
       label: "Active Burrows",
-      value: active,
+      value: inatLoading ? "..." : active,
       icon: <Turtle className="w-5 h-5" />,
       color: "text-[oklch(0.44_0.070_155)]",
     },
     {
       label: "High Threat",
-      value: highThreat,
+      value: inatLoading ? "..." : highThreat,
       icon: <ShieldAlert className="w-5 h-5" />,
       color: "text-[oklch(0.50_0.17_30)]",
     },
     {
-      label: "Verified This Month",
-      value: verifiedThisMonth,
+      label: "Community Reports",
+      value: communityCount,
       icon: <CheckCircle2 className="w-5 h-5" />,
       color: "text-[oklch(0.44_0.040_155)]",
     },
@@ -144,9 +113,16 @@ export function Dashboard({
             <p className="text-sm text-foreground mt-2 max-w-xl">
               Community-driven field documentation of{" "}
               <em className="font-semibold">Gopherus polyphemus</em> burrows
-              across NASA-KSC, SpaceX, Patrick SFB, and private development
-              parcels. Data supports FWC relocation monitoring and habitat
-              protection efforts.
+              across the Space Coast and Melbourne area. Live data from{" "}
+              <a
+                href="https://www.inaturalist.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline text-[oklch(0.44_0.070_155)] hover:opacity-80"
+              >
+                iNaturalist
+              </a>{" "}
+              combined with community field reports.
             </p>
           </div>
 
@@ -175,7 +151,6 @@ export function Dashboard({
           </div>
         </div>
 
-        {/* Field Entry card */}
         {adminEnabled && (
           <Card className="shadow-card border-border w-full lg:w-56 shrink-0">
             <CardHeader className="pb-2">
@@ -214,7 +189,7 @@ export function Dashboard({
               Recent Burrow Records
             </CardTitle>
             <span className="text-xs text-muted-foreground">
-              Last 5 documented
+              {inatLoading ? "Loading..." : `${total} total records`}
             </span>
           </div>
         </CardHeader>
@@ -230,13 +205,13 @@ export function Dashboard({
                     Location
                   </TableHead>
                   <TableHead className="text-xs font-semibold uppercase tracking-wider">
+                    Source
+                  </TableHead>
+                  <TableHead className="text-xs font-semibold uppercase tracking-wider">
                     Status
                   </TableHead>
                   <TableHead className="text-xs font-semibold uppercase tracking-wider">
                     Threat
-                  </TableHead>
-                  <TableHead className="text-xs font-semibold uppercase tracking-wider hidden md:table-cell">
-                    Land Use
                   </TableHead>
                   <TableHead className="text-xs font-semibold uppercase tracking-wider hidden sm:table-cell">
                     Documented
@@ -247,86 +222,77 @@ export function Dashboard({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {recentFive.map((b, i) => (
-                  <TableRow
-                    key={b.id}
-                    className="hover:bg-[oklch(0.95_0.015_85)]"
-                    data-ocid={`dashboard.row.item.${i + 1}`}
-                  >
-                    <TableCell className="font-mono text-xs font-semibold text-[oklch(var(--primary))]">
-                      {b.id}
+                {recentFive.length === 0 ? (
+                  <TableRow>
+                    <TableCell
+                      colSpan={7}
+                      className="py-10 text-center text-muted-foreground text-sm"
+                    >
+                      {inatLoading
+                        ? "Loading field data from iNaturalist..."
+                        : "No records yet. Be the first to report a burrow."}
                     </TableCell>
-                    <TableCell className="text-sm max-w-[200px] truncate">
-                      {b.locationDescription}
-                    </TableCell>
-                    <TableCell>
-                      <StatusBadge status={b.status} />
-                    </TableCell>
-                    <TableCell>
-                      <ThreatBadge level={b.threatLevel} />
-                    </TableCell>
-                    <TableCell className="text-xs text-muted-foreground hidden md:table-cell">
-                      {b.landUse}
-                    </TableCell>
-                    <TableCell className="text-xs text-muted-foreground hidden sm:table-cell">
-                      {b.dateDocumented}
-                    </TableCell>
-                    {adminEnabled && (
-                      <TableCell>
-                        <button
-                          type="button"
-                          onClick={() => handleEdit(b)}
-                          className="p-1 rounded hover:bg-[oklch(0.90_0.030_155)] text-[oklch(var(--secondary))]"
-                          data-ocid={`dashboard.edit_button.${i + 1}`}
-                        >
-                          <Pencil className="w-3.5 h-3.5" />
-                        </button>
-                      </TableCell>
-                    )}
                   </TableRow>
-                ))}
+                ) : (
+                  recentFive.map((b, i) => (
+                    <TableRow
+                      key={b.id}
+                      className="hover:bg-[oklch(0.95_0.015_85)]"
+                      data-ocid={`dashboard.row.item.${i + 1}`}
+                    >
+                      <TableCell className="font-mono text-xs font-semibold text-[oklch(var(--primary))]">
+                        {b.id}
+                      </TableCell>
+                      <TableCell className="text-sm max-w-[200px] truncate">
+                        {b.locationDescription}
+                      </TableCell>
+                      <TableCell>
+                        {b.source === "iNaturalist" ? (
+                          <a
+                            href={b.inatUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[oklch(0.90_0.08_250)] text-[oklch(0.35_0.10_250)] border border-[oklch(0.75_0.08_250)] hover:opacity-80"
+                          >
+                            iNaturalist <ExternalLink className="w-2.5 h-2.5" />
+                          </a>
+                        ) : (
+                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[oklch(0.90_0.08_155)] text-[oklch(0.35_0.08_155)] border border-[oklch(0.75_0.08_155)]">
+                            Community
+                          </span>
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        <StatusBadge status={b.status} />
+                      </TableCell>
+                      <TableCell>
+                        <ThreatBadge level={b.threatLevel} />
+                      </TableCell>
+                      <TableCell className="text-xs text-muted-foreground hidden sm:table-cell">
+                        {b.dateDocumented}
+                      </TableCell>
+                      {adminEnabled && (
+                        <TableCell>
+                          {b.source !== "iNaturalist" && (
+                            <button
+                              type="button"
+                              onClick={() => handleEdit(b)}
+                              className="p-1 rounded hover:bg-[oklch(0.90_0.030_155)] text-[oklch(var(--secondary))]"
+                              data-ocid={`dashboard.edit_button.${i + 1}`}
+                            >
+                              <Pencil className="w-3.5 h-3.5" />
+                            </button>
+                          )}
+                        </TableCell>
+                      )}
+                    </TableRow>
+                  ))
+                )}
               </TableBody>
             </Table>
           </div>
         </CardContent>
       </Card>
-
-      {/* Featured Field Observations */}
-      <div>
-        <h3 className="text-base font-semibold text-[oklch(var(--primary))] uppercase tracking-wide mb-3">
-          Featured Field Observations
-        </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {fieldObservations.map((obs, i) => (
-            <motion.div
-              key={obs.img}
-              initial={{ opacity: 0, scale: 0.97 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: i * 0.08 }}
-            >
-              <Card className="shadow-card border-border overflow-hidden group cursor-pointer hover:shadow-card-hover transition-shadow">
-                <div className="relative overflow-hidden h-44">
-                  <img
-                    src={obs.img}
-                    alt={obs.caption}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    loading="lazy"
-                  />
-                </div>
-                <CardContent className="p-3">
-                  <p className="text-sm font-medium leading-snug line-clamp-2">
-                    {obs.caption}
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    {obs.meta}
-                  </p>
-                  <p className="text-xs text-muted-foreground">By {obs.by}</p>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
-      </div>
 
       <BurrowModal
         open={modalOpen}

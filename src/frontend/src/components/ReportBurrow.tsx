@@ -18,6 +18,7 @@ import type {
 import { FileImage, MapPin, Send } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { MapPinPicker } from "./MapPinPicker";
 
 interface Props {
   onReport: (burrow: Burrow) => void;
@@ -75,6 +76,11 @@ export function ReportBurrow({ onReport, nextId }: Props) {
     setSubmitting(false);
   };
 
+  const pinned =
+    form.latitude !== ""
+      ? { lat: Number(form.latitude), lng: Number(form.longitude) }
+      : null;
+
   return (
     <div className="max-w-2xl space-y-6">
       {/* Header */}
@@ -121,30 +127,16 @@ export function ReportBurrow({ onReport, nextId }: Props) {
           />
         </div>
 
-        {/* Lat / Lon */}
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-1.5">
-            <Label htmlFor="r-lat">Latitude (optional)</Label>
-            <Input
-              id="r-lat"
-              type="number"
-              step="0.0001"
-              value={form.latitude}
-              onChange={(e) => set("latitude", e.target.value)}
-              placeholder="28.0934"
-            />
-          </div>
-          <div className="space-y-1.5">
-            <Label htmlFor="r-lon">Longitude (optional)</Label>
-            <Input
-              id="r-lon"
-              type="number"
-              step="0.0001"
-              value={form.longitude}
-              onChange={(e) => set("longitude", e.target.value)}
-              placeholder="-80.6123"
-            />
-          </div>
+        {/* Map Pin Picker */}
+        <div className="space-y-1.5">
+          <Label>Pin Burrow Location on Map (optional)</Label>
+          <MapPinPicker
+            onPin={(lat, lng) => {
+              set("latitude", String(lat));
+              set("longitude", String(lng));
+            }}
+            pinned={pinned}
+          />
         </div>
 
         {/* Land Use */}
@@ -273,6 +265,13 @@ export function ReportBurrow({ onReport, nextId }: Props) {
               </button>
             )}
           </div>
+          {form.photo && (
+            <img
+              src={URL.createObjectURL(form.photo)}
+              alt="Preview"
+              className="mt-2 rounded-md max-h-40 object-cover border border-border"
+            />
+          )}
         </div>
 
         {/* Submit */}

@@ -52,27 +52,22 @@ export function About() {
               <div>
                 <h3 className="text-lg font-bold mb-2">Our Mission</h3>
                 <p className="text-sm opacity-90 leading-relaxed">
-                  Burrow Watch exists to document, track, and advocate for{" "}
-                  <em>Gopherus polyphemus</em> — the gopher tortoise — across
-                  the Space Coast of Florida. As the region faces unprecedented
-                  industrial and residential development pressure from
-                  aerospace, defense, and private sectors, systematic community
-                  documentation of burrow locations has never been more
-                  critical.
+                  Burrow Watch exists to document and protect Florida's gopher
+                  tortoise — <em>Gopherus polyphemus</em> — across the Space
+                  Coast and Melbourne corridor. As the region grows, knowing
+                  exactly where protected burrows exist benefits everyone:
+                  communities, researchers, regulatory agencies, and developers
+                  alike.
                 </p>
                 <p className="text-sm opacity-90 leading-relaxed mt-3">
-                  Our goal is to create an accurate, accessible public registry
-                  of known burrow sites — particularly on or adjacent to lands
-                  controlled by NASA, SpaceX, Patrick Space Force Base, and
-                  private developers — so that conservation advocates,
-                  researchers, and regulatory agencies have the data they need
-                  to protect these animals before ground-disturbing activities
-                  begin. The registry now covers the Melbourne aerospace
-                  corridor, including land adjacent to Harris/L3T, Northrop
-                  Grumman, Collins Aerospace, and Melbourne Orlando
-                  International Airport — areas with vast undeveloped scrub
-                  under development pressure from billion-dollar defense
-                  corporations.
+                  Our goal is a shared, accessible public registry of known
+                  burrow sites — including land near NASA, SpaceX, Patrick Space
+                  Force Base, Harris/L3T, Northrop Grumman, Collins Aerospace,
+                  and Melbourne Orlando International Airport. A clear, accurate
+                  record helps growth and conservation move forward together —
+                  reducing the risk of costly FWC violations and ensuring
+                  Florida's natural heritage is honored as the Space Coast
+                  continues to expand.
                 </p>
               </div>
             </div>
