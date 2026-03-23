@@ -2,6 +2,7 @@ import { About } from "@/components/About";
 import { BurrowRegistry } from "@/components/BurrowRegistry";
 import { Dashboard } from "@/components/Dashboard";
 import { Education } from "@/components/Education";
+import { ReportBurrow } from "@/components/ReportBurrow";
 import { Label } from "@/components/ui/label";
 import { Toaster } from "@/components/ui/sonner";
 import { Switch } from "@/components/ui/switch";
@@ -50,7 +51,7 @@ export default function App() {
                 Burrow Watch
               </span>
               <p className="text-[oklch(var(--primary-foreground)/0.7)] text-xs leading-none mt-0.5 hidden sm:block">
-                Space Coast, FL
+                Space Coast &amp; Melbourne, FL
               </p>
             </div>
           </div>
@@ -80,7 +81,8 @@ export default function App() {
             Burrow Registry Dashboard
           </h1>
           <p className="text-[oklch(var(--primary-foreground)/0.75)] text-sm mt-1">
-            Gopher Tortoise Documentation · Brevard County · Space Coast Region
+            Gopher Tortoise Documentation · Space Coast &amp; Melbourne ·
+            Brevard County
           </p>
         </div>
       </div>
@@ -89,7 +91,7 @@ export default function App() {
       <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6">
         <Tabs defaultValue="dashboard" className="space-y-6">
           <TabsList
-            className="bg-[oklch(0.91_0.025_155)] border border-border p-1 rounded-lg"
+            className="bg-[oklch(0.91_0.025_155)] border border-border p-1 rounded-lg flex-wrap h-auto gap-1"
             data-ocid="nav.tab"
           >
             <TabsTrigger
@@ -105,6 +107,13 @@ export default function App() {
               data-ocid="nav.registry.tab"
             >
               Burrow Registry
+            </TabsTrigger>
+            <TabsTrigger
+              value="report"
+              className="data-[state=active]:bg-[oklch(var(--primary))] data-[state=active]:text-[oklch(var(--primary-foreground))] text-sm font-medium"
+              data-ocid="nav.report.tab"
+            >
+              Report a Burrow
             </TabsTrigger>
             <TabsTrigger
               value="education"
@@ -142,6 +151,10 @@ export default function App() {
             />
           </TabsContent>
 
+          <TabsContent value="report">
+            <ReportBurrow onReport={handleAdd} nextId={nextId} />
+          </TabsContent>
+
           <TabsContent value="education">
             <Education />
           </TabsContent>
@@ -158,7 +171,8 @@ export default function App() {
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="space-y-1">
               <p className="text-sm font-semibold text-[oklch(0.88_0_0)]">
-                Burrow Watch · Space Coast Gopher Tortoise Registry
+                Burrow Watch · Space Coast &amp; Melbourne Gopher Tortoise
+                Registry
               </p>
               <p className="text-xs">
                 Field data supports FWC Brevard County gopher tortoise

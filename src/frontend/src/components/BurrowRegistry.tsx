@@ -179,6 +179,18 @@ export function BurrowRegistry({
                   Private Development
                 </SelectItem>
                 <SelectItem value="Other">Other</SelectItem>
+                <SelectItem value="Harris/L3T">
+                  Harris / L3T (Melbourne)
+                </SelectItem>
+                <SelectItem value="Northrop Grumman">
+                  Northrop Grumman
+                </SelectItem>
+                <SelectItem value="Collins Aerospace">
+                  Collins Aerospace
+                </SelectItem>
+                <SelectItem value="Melbourne Airport Area">
+                  Melbourne Airport Area
+                </SelectItem>
               </SelectContent>
             </Select>
 

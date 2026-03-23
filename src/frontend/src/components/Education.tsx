@@ -63,7 +63,7 @@ const sections = [
       },
       {
         subtitle: "The Land Holders",
-        body: "Large portions of Space Coast scrub are controlled by federal and private entities: NASA Kennedy Space Center (KSC) and Launch Control Complex, SpaceX's expanding Starbase operations, Patrick Space Force Base, and an accelerating wave of private warehouse and residential development, particularly in Brevard County's central corridor.",
+        body: "Large portions of Space Coast scrub are controlled by federal and private entities: NASA Kennedy Space Center (KSC) and Launch Control Complex, SpaceX's expanding Starbase operations, Patrick Space Force Base, and an accelerating wave of private warehouse and residential development, particularly in Brevard County's central corridor. In the Melbourne corridor to the south, major defense contractors — Harris/L3T, Northrop Grumman, and Collins Aerospace — control large campus perimeters with adjacent scrub. Melbourne Orlando International Airport's expansion zone also borders documented tortoise habitat. These entities control vast tracts of undeveloped land where community documentation is the primary accountability mechanism.",
       },
       {
         subtitle: "Ongoing Development Pressure",

@@ -5,6 +5,10 @@ export type LandUse =
   | "SpaceX"
   | "Patrick SFB"
   | "Private Development"
+  | "Harris/L3T"
+  | "Northrop Grumman"
+  | "Collins Aerospace"
+  | "Melbourne Airport Area"
   | "Other";
 
 export interface Burrow {
@@ -172,5 +176,80 @@ export const INITIAL_BURROWS: Burrow[] = [
     notes:
       "Protected sanctuary parcel. Multiple healthy burrows, gopher frog observed near burrow 3. No development threat. Ideal reference site for comparison monitoring.",
     documentedBy: "S. Patel",
+  },
+  {
+    id: "SCB-011",
+    locationDescription:
+      "Melbourne Orlando International Airport northern boundary scrub, open sandy upland near runway expansion zone",
+    latitude: 28.1023,
+    longitude: -80.6345,
+    status: "Active",
+    threatLevel: "High",
+    landUse: "Melbourne Airport Area",
+    dateDocumented: "2024-10-15",
+    lastVerified: "2025-01-20",
+    notes:
+      "Active burrow with fresh sand apron approx 80m from proposed northern runway expansion boundary. Airport expansion environmental review does not currently include this scrub parcel. Site requires urgent community monitoring.",
+    documentedBy: "J. Rivera",
+  },
+  {
+    id: "SCB-012",
+    locationDescription:
+      "Harris / L3T campus west scrub buffer, Palm Bay — undeveloped parcel adjacent to main facility perimeter",
+    latitude: 28.0512,
+    longitude: -80.6789,
+    status: "Active",
+    threatLevel: "High",
+    landUse: "Harris/L3T",
+    dateDocumented: "2024-11-02",
+    lastVerified: "2025-02-14",
+    notes:
+      "Two active burrows identified within scrub buffer on west side of Harris/L3T campus. Scrub vegetation intact. Facility expansion plans filed with Brevard County in Q4 2024 cover adjacent parcels.",
+    documentedBy: "K. Torres",
+  },
+  {
+    id: "SCB-013",
+    locationDescription:
+      "Northrop Grumman facility perimeter, Melbourne — sandy scrub remnant along northern fence line",
+    latitude: 28.0934,
+    longitude: -80.6123,
+    status: "Potentially Active",
+    threatLevel: "Moderate",
+    landUse: "Northrop Grumman",
+    dateDocumented: "2024-11-18",
+    lastVerified: "2025-01-30",
+    notes:
+      "Burrow entrance partially obscured by debris but apron structure visible. Located in thin scrub strip along facility boundary. Verify status on next visit; landscaping activity observed nearby.",
+    documentedBy: "J. Rivera",
+  },
+  {
+    id: "SCB-014",
+    locationDescription:
+      "Collins Aerospace facility east buffer scrub, Melbourne — open sand flat between facility and residential zone",
+    latitude: 28.1245,
+    longitude: -80.5987,
+    status: "Active",
+    threatLevel: "Moderate",
+    landUse: "Collins Aerospace",
+    dateDocumented: "2024-12-05",
+    lastVerified: "2025-02-22",
+    notes:
+      "Active burrow on undeveloped parcel east of Collins Aerospace campus. Fresh apron and tortoise observed at entrance. Buffer parcel status in county zoning review.",
+    documentedBy: "K. Torres",
+  },
+  {
+    id: "SCB-015",
+    locationDescription:
+      "South Melbourne scrub remnant, undeveloped parcels near Eau Gallie Blvd — multi-parcel corridor",
+    latitude: 28.0678,
+    longitude: -80.6456,
+    status: "Active",
+    threatLevel: "High",
+    landUse: "Private Development",
+    dateDocumented: "2025-01-10",
+    lastVerified: "2025-03-05",
+    notes:
+      "Four active burrows documented across adjacent undeveloped parcels. Multiple corporate development proposals submitted for this corridor in 2024-2025. Site is a priority for community monitoring and FWC engagement before any ground disturbance permits are issued.",
+    documentedBy: "J. Rivera",
   },
 ];

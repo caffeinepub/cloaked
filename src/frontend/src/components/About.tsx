@@ -1,8 +1,29 @@
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Database, Globe, Turtle, Users } from "lucide-react";
+import {
+  Check,
+  Copy,
+  Database,
+  Globe,
+  Heart,
+  Turtle,
+  Users,
+} from "lucide-react";
 import { motion } from "motion/react";
+import { useState } from "react";
+
+const ICP_ADDRESS =
+  "416c602ad9431e5c54158097c181a8268c72de7704f8276d6d13e7e4f4207150";
 
 export function About() {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(ICP_ADDRESS);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <div className="space-y-6 max-w-3xl">
       <motion.div
@@ -13,8 +34,8 @@ export function About() {
           About Burrow Watch
         </h2>
         <p className="text-sm text-muted-foreground mt-1">
-          Community field documentation for Space Coast gopher tortoise
-          conservation
+          Community field documentation for Space Coast &amp; Melbourne gopher
+          tortoise conservation
         </p>
       </motion.div>
 
@@ -46,7 +67,12 @@ export function About() {
                   private developers — so that conservation advocates,
                   researchers, and regulatory agencies have the data they need
                   to protect these animals before ground-disturbing activities
-                  begin.
+                  begin. The registry now covers the Melbourne aerospace
+                  corridor, including land adjacent to Harris/L3T, Northrop
+                  Grumman, Collins Aerospace, and Melbourne Orlando
+                  International Airport — areas with vast undeveloped scrub
+                  under development pressure from billion-dollar defense
+                  corporations.
                 </p>
               </div>
             </div>
@@ -106,11 +132,81 @@ export function About() {
         ))}
       </div>
 
+      {/* Support / Donation */}
+      <motion.div
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.32 }}
+      >
+        <Card className="shadow-card border-[oklch(0.82_0.08_65)] bg-[oklch(0.97_0.03_65)]">
+          <CardHeader className="pb-3">
+            <div className="flex items-center gap-3">
+              <div className="p-2.5 rounded-lg bg-[oklch(0.93_0.06_65)] text-[oklch(0.40_0.10_65)]">
+                <Heart className="w-6 h-6" />
+              </div>
+              <CardTitle className="text-base font-bold text-[oklch(0.40_0.10_65)]">
+                Support Burrow Watch
+              </CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <p className="text-sm text-[oklch(0.30_0.06_65)] leading-relaxed">
+              Burrow Watch runs on the Internet Computer (ICP) — a decentralized
+              network with no corporate ownership. If this project has helped
+              you or you want to support the conservation mission, donations in
+              ICP are welcome and appreciated.
+            </p>
+
+            <div className="rounded-md bg-[oklch(0.91_0.05_65)] border border-[oklch(0.80_0.07_65)] p-3">
+              <p className="text-xs font-semibold text-[oklch(0.40_0.10_65)] mb-1.5 uppercase tracking-wide">
+                ICP Wallet Address
+              </p>
+              <div className="flex items-center gap-2">
+                <code className="text-xs text-[oklch(0.28_0.06_65)] break-all flex-1 leading-relaxed">
+                  {ICP_ADDRESS}
+                </code>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleCopy}
+                  className="shrink-0 border-[oklch(0.75_0.08_65)] text-[oklch(0.40_0.10_65)] hover:bg-[oklch(0.88_0.06_65)] gap-1.5"
+                  data-ocid="about.copy_button"
+                >
+                  {copied ? (
+                    <>
+                      <Check className="w-3.5 h-3.5" /> Copied!
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5" /> Copy
+                    </>
+                  )}
+                </Button>
+              </div>
+            </div>
+
+            <p className="text-xs text-muted-foreground">
+              ICP is the Internet Computer's native currency. You can send ICP
+              using{" "}
+              <a
+                href="https://plugwallet.ooo"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-[oklch(0.40_0.10_65)]"
+              >
+                Plug Wallet (plugwallet.ooo)
+              </a>{" "}
+              or any ICP-compatible wallet.
+            </p>
+          </CardContent>
+        </Card>
+      </motion.div>
+
       {/* Contact / Credits */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
+        transition={{ delay: 0.38 }}
       >
         <Card className="shadow-card border-border">
           <CardContent className="pt-5 pb-5">
@@ -118,7 +214,8 @@ export function About() {
               Version &amp; Credits
             </h4>
             <p className="text-sm text-muted-foreground">
-              Burrow Watch v1.0 · Space Coast, FL · Brevard County
+              Burrow Watch v1.1 · Space Coast &amp; Melbourne, FL · Brevard
+              County
             </p>
             <p className="text-sm text-muted-foreground mt-1">
               Field data contributes to FWC gopher tortoise monitoring efforts.

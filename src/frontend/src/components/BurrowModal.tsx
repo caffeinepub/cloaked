@@ -164,7 +164,7 @@ export function BurrowModal({
           </div>
 
           {/* Land Use */}
-          <div className="space-y-1">
+          <div className="md:col-span-2 space-y-1">
             <Label>Land Use / Jurisdiction</Label>
             <Select
               value={form.landUse}
@@ -180,23 +180,24 @@ export function BurrowModal({
                 <SelectItem value="Private Development">
                   Private Development
                 </SelectItem>
+                <SelectItem value="Harris/L3T">
+                  Harris / L3T (Melbourne)
+                </SelectItem>
+                <SelectItem value="Northrop Grumman">
+                  Northrop Grumman
+                </SelectItem>
+                <SelectItem value="Collins Aerospace">
+                  Collins Aerospace
+                </SelectItem>
+                <SelectItem value="Melbourne Airport Area">
+                  Melbourne Airport Area
+                </SelectItem>
                 <SelectItem value="Other">Other</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
-          {/* Documented By */}
-          <div className="space-y-1">
-            <Label htmlFor="docBy">Documented By</Label>
-            <Input
-              id="docBy"
-              value={form.documentedBy}
-              onChange={(e) => set("documentedBy", e.target.value)}
-              placeholder="Field researcher name"
-            />
-          </div>
-
-          {/* Date Documented */}
+          {/* Dates */}
           <div className="space-y-1">
             <Label htmlFor="dateDoc">Date Documented</Label>
             <Input
@@ -206,8 +207,6 @@ export function BurrowModal({
               onChange={(e) => set("dateDocumented", e.target.value)}
             />
           </div>
-
-          {/* Last Verified */}
           <div className="space-y-1">
             <Label htmlFor="lastVer">Last Verified</Label>
             <Input
@@ -218,41 +217,32 @@ export function BurrowModal({
             />
           </div>
 
-          {/* Photo */}
+          {/* Documented By */}
           <div className="md:col-span-2 space-y-1">
-            <Label htmlFor="photo">Photo (field documentation)</Label>
+            <Label htmlFor="docBy">Documented By</Label>
             <Input
-              id="photo"
-              type="file"
-              accept="image/*"
-              onChange={(e) =>
-                set("photoFilename", e.target.files?.[0]?.name ?? "")
-              }
-              data-ocid="burrow.upload_button"
-              className="cursor-pointer"
+              id="docBy"
+              value={form.documentedBy}
+              onChange={(e) => set("documentedBy", e.target.value)}
+              placeholder="Name or initials"
             />
-            {form.photoFilename && (
-              <p className="text-xs text-muted-foreground">
-                Selected: {form.photoFilename}
-              </p>
-            )}
           </div>
 
           {/* Notes */}
           <div className="md:col-span-2 space-y-1">
-            <Label htmlFor="notes">Field Notes</Label>
+            <Label htmlFor="notes">Notes / Observations</Label>
             <Textarea
               id="notes"
               value={form.notes}
               onChange={(e) => set("notes", e.target.value)}
               rows={4}
-              placeholder="Describe observations, burrow dimensions, surrounding vegetation, wildlife activity..."
+              placeholder="Describe burrow activity, surroundings, threats..."
               data-ocid="burrow.textarea"
             />
           </div>
         </div>
 
-        <DialogFooter className="gap-2">
+        <DialogFooter>
           <Button
             variant="outline"
             onClick={onClose}
@@ -262,9 +252,8 @@ export function BurrowModal({
           </Button>
           <Button
             onClick={handleSave}
-            disabled={!form.locationDescription.trim()}
-            className="bg-[oklch(var(--primary))] text-[oklch(var(--primary-foreground))] hover:bg-[oklch(0.26_0.055_155)]"
-            data-ocid="burrow.submit_button"
+            className="bg-[oklch(var(--primary))] text-[oklch(var(--primary-foreground))]"
+            data-ocid="burrow.save_button"
           >
             {existing ? "Save Changes" : "Add Burrow"}
           </Button>

@@ -1,31 +1,30 @@
 # Burrow Watch
 
 ## Current State
-New project. No existing application files.
+Burrow Watch is a gopher tortoise burrow tracker for the Space Coast / Brevard County region. Land use categories: NASA-KSC, SpaceX, Patrick SFB, Private Development, Other. 10 seed burrows. Field mode toggle enables add/edit. No public submission, no Melbourne/aerospace coverage, no donation feature.
 
 ## Requested Changes (Diff)
 
 ### Add
-- Public-facing burrow registry: browsable list of documented gopher tortoise burrows in the Space Coast, FL region
-- Each burrow record includes: burrow ID, GPS coordinates (lat/lng), location description, status (Active, Potentially Active, Abandoned), threat level (Low, Moderate, High), nearby land use (NASA/KSC, SpaceX, Patrick SFB, Private Development, Other), date documented, last verified date, notes, photo upload
-- KPI dashboard stats: Total Burrows, Active, Under Threat, Verified This Month
-- Admin-only data entry form to add and edit burrow records
-- Photo documentation via blob-storage
-- Role-based access: public can browse; admin can add/edit records
-- Status and threat level badges with color coding
-- Filter/search by status, threat level, land use type
-- Featured field observations section (recent records with photos)
-- Education/awareness section: what gopher tortoises are, why they are a keystone species, how many species depend on their burrows, the threat posed by Space Coast development, how to report a sighting, and what protections exist under Florida law
+- New LandUse categories: Melbourne Airport Area, Harris/L3T, Northrop Grumman, Collins Aerospace
+- 5 new seed burrows near Melbourne aerospace/defense corridor
+- Public "Report a Burrow" tab — anyone can submit a sighting without field mode (location, coordinates, land use, threat, notes, photo); submissions appear in registry with Reported status
+- "Support This Project" ICP donation section in About tab (address: 416c602ad9431e5c54158097c181a8268c72de7704f8276d6d13e7e4f4207150) with copy button
+- Mission note in About explaining purpose: document burrows near large corporation development land to ensure responsible development
 
 ### Modify
-- N/A (new project)
+- BurrowModal and BurrowRegistry selects to include new land use categories
+- Header subtitle to include Melbourne region
+- Education section to briefly reference Melbourne aerospace corridor
 
 ### Remove
-- N/A (new project)
+- Nothing
 
 ## Implementation Plan
-1. Backend: burrow record data model with all fields; CRUD operations; admin authorization; query/filter endpoints
-2. Frontend: dashboard with KPI stats, burrow registry table with filters, featured observations cards, admin data entry form, photo upload via blob-storage
-3. Education tab: keystone species explainer, burrow ecosystem facts, development threat context, reporting guidance, legal protections
-4. Authorization: admin role for data entry; public read access for registry
-5. Blob-storage: photo uploads attached to burrow records
+1. Update burrows.ts: add LandUse types + Melbourne seed records
+2. Update BurrowModal.tsx: new land use options
+3. Update BurrowRegistry.tsx: new land use filter options
+4. Add ReportBurrow.tsx: public submission form
+5. Update App.tsx: add Report tab, update subtitle
+6. Update About.tsx: donation section + mission note
+7. Update Education.tsx: Melbourne aerospace corridor mention
