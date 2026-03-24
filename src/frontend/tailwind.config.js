@@ -5,10 +5,10 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ["Anton", "Impact", "system-ui", "sans-serif"],
-        heading: ["Bebas Neue", "Anton", "Impact", "sans-serif"],
-        body: ["Space Grotesk", "system-ui", "sans-serif"],
-        sans: ["Space Grotesk", "system-ui", "sans-serif"],
+        display: ["Playfair Display", "Georgia", "serif"],
+        heading: ["Playfair Display", "Georgia", "serif"],
+        body: ["Lora", "Georgia", "serif"],
+        sans: ["Figtree", "system-ui", "sans-serif"],
         mono: ["JetBrains Mono", "Consolas", "monospace"],
       },
       colors: {
@@ -45,11 +45,12 @@ export default {
         border: "oklch(var(--border) / <alpha-value>)",
         input: "oklch(var(--input) / <alpha-value>)",
         ring: "oklch(var(--ring) / <alpha-value>)",
-        gold: {
-          bright: "oklch(var(--gold-bright) / <alpha-value>)",
-          mid: "oklch(var(--gold-mid) / <alpha-value>)",
-          dark: "oklch(var(--gold-dark) / <alpha-value>)",
-          muted: "oklch(var(--gold-muted) / <alpha-value>)",
+        earth: {
+          green: "oklch(var(--earth-green) / <alpha-value>)",
+          ochre: "oklch(var(--earth-ochre) / <alpha-value>)",
+          sienna: "oklch(var(--earth-sienna) / <alpha-value>)",
+          cream: "oklch(var(--earth-cream) / <alpha-value>)",
+          dark: "oklch(var(--earth-dark) / <alpha-value>)",
         },
       },
       borderRadius: {

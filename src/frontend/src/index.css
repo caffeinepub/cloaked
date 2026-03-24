@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Figtree:wght@300;400;500;600;700&display=swap");
 
 @font-face {
   font-family: "JetBrains Mono";
@@ -14,34 +14,40 @@
 
 @layer base {
   :root {
-    /* Money Masters Cinematic Dark Gold Palette */
-    --background: 0.08 0.002 280;
-    --foreground: 0.97 0 0;
-    --card: 0.11 0.004 280;
-    --card-foreground: 0.97 0 0;
-    --popover: 0.11 0.004 280;
-    --popover-foreground: 0.97 0 0;
-    /* Gold as primary */
-    --primary: 0.72 0.13 75;
-    --primary-foreground: 0.08 0.002 280;
-    --secondary: 0.14 0.006 280;
-    --secondary-foreground: 0.97 0 0;
-    --muted: 0.14 0.005 280;
-    --muted-foreground: 0.55 0.008 280;
-    --accent: 0.72 0.13 75;
-    --accent-foreground: 0.08 0.002 280;
-    --destructive: 0.55 0.22 25;
-    --destructive-foreground: 0.97 0 0;
-    --border: 0.2 0.005 280;
-    --input: 0.18 0.005 280;
-    --ring: 0.72 0.13 75;
-    --radius: 0.5rem;
-    /* Named gold tokens */
-    --gold-bright: 0.76 0.155 75;
-    --gold-mid: 0.68 0.13 75;
-    --gold-dark: 0.58 0.1 75;
-    --gold-muted: 0.45 0.07 75;
-    --text-secondary: 0.8 0.005 280;
+    /* Free Soil Gardens — earthy light palette */
+    /* deep forest green (#2d4a2d) -> oklch(0.33 0.072 145) */
+    /* warm ochre (#c8962a) -> oklch(0.68 0.128 68) */
+    /* sienna (#9b4f2a) -> oklch(0.5 0.115 42) */
+    /* cream (#f5eed8) -> oklch(0.95 0.028 88) */
+    /* dark earth (#3a2a1a) -> oklch(0.25 0.04 55) */
+
+    --background: 0.95 0.028 88;
+    --foreground: 0.25 0.04 55;
+    --card: 0.97 0.018 88;
+    --card-foreground: 0.25 0.04 55;
+    --popover: 0.97 0.018 88;
+    --popover-foreground: 0.25 0.04 55;
+    --primary: 0.33 0.072 145;
+    --primary-foreground: 0.95 0.028 88;
+    --secondary: 0.91 0.038 88;
+    --secondary-foreground: 0.25 0.04 55;
+    --muted: 0.91 0.025 88;
+    --muted-foreground: 0.48 0.04 55;
+    --accent: 0.68 0.128 68;
+    --accent-foreground: 0.15 0.02 55;
+    --destructive: 0.5 0.115 42;
+    --destructive-foreground: 0.95 0.028 88;
+    --border: 0.82 0.048 80;
+    --input: 0.88 0.038 80;
+    --ring: 0.33 0.072 145;
+    --radius: 0.375rem;
+
+    /* Named earth tokens */
+    --earth-green: 0.33 0.072 145;
+    --earth-ochre: 0.68 0.128 68;
+    --earth-sienna: 0.5 0.115 42;
+    --earth-cream: 0.95 0.028 88;
+    --earth-dark: 0.25 0.04 55;
   }
 }
 
@@ -51,179 +57,147 @@
   }
   html {
     scroll-behavior: smooth;
-    color-scheme: dark;
   }
   body {
     @apply bg-background text-foreground;
-    font-family: "Space Grotesk", system-ui, sans-serif;
+    font-family: "Figtree", system-ui, sans-serif;
     overflow-x: hidden;
   }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: "Playfair Display", Georgia, serif;
+  }
 }
 
-/* ── Gold glow on LED digits ── */
-.glow-gold {
-  text-shadow: 0 0 8px oklch(0.76 0.155 75 / 0.95), 0 0 20px
-    oklch(0.72 0.13 75 / 0.7), 0 0 50px oklch(0.62 0.11 75 / 0.4), 0 0 100px
-    oklch(0.55 0.09 75 / 0.2);
+/* ── Worn paper texture background ── */
+.paper-bg {
+  background-color: oklch(0.95 0.028 88);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"),
+    linear-gradient(160deg, oklch(0.97 0.018 88) 0%, oklch(0.93 0.032 85) 100%);
 }
 
-.glow-gold-subtle {
-  text-shadow: 0 0 6px oklch(0.76 0.155 75 / 0.6), 0 0 18px
-    oklch(0.72 0.13 75 / 0.35);
+/* ── Card texture ── */
+.card-texture {
+  background-color: oklch(0.97 0.018 88);
+  background-image: linear-gradient(
+    135deg,
+    oklch(0.99 0.01 88) 0%,
+    oklch(0.94 0.025 85) 100%
+  );
+  border: 1px solid oklch(0.82 0.048 80);
 }
 
-.box-glow-gold {
-  box-shadow: 0 0 0 1px oklch(0.72 0.13 75 / 0.35), 0 0 24px
-    oklch(0.68 0.13 75 / 0.2), 0 0 60px oklch(0.58 0.1 75 / 0.1), inset 0 0 30px
-    oklch(0.72 0.13 75 / 0.04);
-}
-
-.box-glow-gold-strong {
-  box-shadow: 0 0 0 1px oklch(0.72 0.13 75 / 0.6), 0 0 30px
-    oklch(0.68 0.13 75 / 0.35), 0 0 80px oklch(0.58 0.1 75 / 0.18), inset 0 0
-    40px oklch(0.72 0.13 75 / 0.06);
-}
-
-/* ── Scanlines on the counter ── */
-.scanlines {
+/* ── Section heading underline ── */
+.earthy-underline {
   position: relative;
-  overflow: hidden;
+  display: inline-block;
 }
-.scanlines::after {
+.earthy-underline::after {
   content: "";
   position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 3px,
-    oklch(0 0 0 / 0.1) 3px,
-    oklch(0 0 0 / 0.1) 5px
-  );
-  pointer-events: none;
-  z-index: 10;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, oklch(0.68 0.128 68), oklch(0.5 0.115 42));
+  border-radius: 1px;
 }
 
-/* ── Hero background ── */
-.hero-bg {
-  position: relative;
-  background-color: oklch(0.06 0.002 280);
-  background-image: radial-gradient(
-      ellipse at 50% 0%,
-      oklch(0.72 0.13 75 / 0.07) 0%,
-      transparent 55%
-    ),
-    radial-gradient(
-      ellipse at 20% 80%,
-      oklch(0.55 0.09 75 / 0.05) 0%,
-      transparent 45%
-    ),
-    radial-gradient(
-      ellipse at 80% 60%,
-      oklch(0.68 0.13 75 / 0.04) 0%,
-      transparent 40%
-    );
+/* ── Month nav button ── */
+.month-nav-btn {
+  background: oklch(0.33 0.072 145 / 0.1);
+  border: 1px solid oklch(0.33 0.072 145 / 0.3);
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+.month-nav-btn:hover {
+  background: oklch(0.33 0.072 145 / 0.2);
+  border-color: oklch(0.33 0.072 145 / 0.5);
 }
 
-.hero-bg::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("/assets/generated/hero-money-bg.dim_1920x1080.jpg");
-  background-size: cover;
-  background-position: center;
-  opacity: 0.12;
-  z-index: 0;
+/* ── Section icon accent ── */
+.icon-season {
+  color: oklch(0.68 0.128 68);
+}
+.icon-plant {
+  color: oklch(0.33 0.072 145);
+}
+.icon-weather {
+  color: oklch(0.5 0.115 42);
+}
+.icon-maintenance {
+  color: oklch(0.25 0.04 55);
 }
 
-/* ── Page background ── */
-.page-bg {
-  background-color: oklch(0.08 0.002 280);
-  background-image: radial-gradient(
-    ellipse 100% 50% at 50% 0%,
-    oklch(0.72 0.13 75 / 0.06) 0%,
-    transparent 60%
-  );
+/* ── Shop badge sold-out ── */
+.badge-sold-out {
+  background: oklch(0.5 0.115 42 / 0.15);
+  color: oklch(0.5 0.115 42);
+  border: 1px solid oklch(0.5 0.115 42 / 0.4);
+}
+.badge-available {
+  background: oklch(0.33 0.072 145 / 0.12);
+  color: oklch(0.33 0.072 145);
+  border: 1px solid oklch(0.33 0.072 145 / 0.35);
 }
 
-/* ── Gold top bar ── */
-.gold-topbar {
+/* ── Gallery placeholder gradients ── */
+.gallery-1 {
   background: linear-gradient(
-    90deg,
-    oklch(0.55 0.09 75) 0%,
-    oklch(0.76 0.155 75) 40%,
-    oklch(0.72 0.13 75) 60%,
-    oklch(0.58 0.1 75) 100%
+    135deg,
+    oklch(0.33 0.072 145) 0%,
+    oklch(0.45 0.08 140) 100%
   );
-  height: 3px;
 }
-
-/* ── Section divider ── */
-.section-divider {
-  height: 1px;
+.gallery-2 {
   background: linear-gradient(
-    90deg,
-    transparent,
-    oklch(0.72 0.13 75 / 0.4) 30%,
-    oklch(0.76 0.155 75 / 0.6) 50%,
-    oklch(0.72 0.13 75 / 0.4) 70%,
-    transparent
+    135deg,
+    oklch(0.5 0.115 42) 0%,
+    oklch(0.68 0.128 68) 100%
   );
 }
-
-/* ── Timeline line ── */
-.timeline-line {
+.gallery-3 {
   background: linear-gradient(
-    180deg,
-    oklch(0.55 0.09 75 / 0.3),
-    oklch(0.76 0.155 75 / 0.7) 20%,
-    oklch(0.76 0.155 75 / 0.7) 80%,
-    oklch(0.55 0.09 75 / 0.3)
+    135deg,
+    oklch(0.45 0.06 145) 0%,
+    oklch(0.38 0.065 148) 100%
+  );
+}
+.gallery-4 {
+  background: linear-gradient(
+    135deg,
+    oklch(0.68 0.128 68) 0%,
+    oklch(0.55 0.09 65) 100%
+  );
+}
+.gallery-5 {
+  background: linear-gradient(
+    135deg,
+    oklch(0.4 0.08 145) 0%,
+    oklch(0.5 0.09 42) 100%
+  );
+}
+.gallery-6 {
+  background: linear-gradient(
+    135deg,
+    oklch(0.6 0.1 68) 0%,
+    oklch(0.42 0.07 80) 100%
   );
 }
 
-/* ── Inflation bar ── */
-.inflation-bar-fill {
-  background: linear-gradient(90deg, oklch(0.58 0.1 75), oklch(0.76 0.155 75));
-  box-shadow: 0 0 8px oklch(0.72 0.13 75 / 0.5);
-}
-
-/* ── Live pulse ── */
-@keyframes livePulse {
-  0%,
-  100% {
-    opacity: 1;
-    box-shadow: 0 0 6px oklch(0.76 0.155 75);
-  }
-  50% {
-    opacity: 0.55;
-    box-shadow: 0 0 2px oklch(0.72 0.13 75);
-  }
-}
-.live-pulse {
-  animation: livePulse 2s ease-in-out infinite;
-}
-
-/* ── Counter digit tick ── */
-@keyframes tickUp {
-  0% {
-    transform: translateY(20%);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-.tick-animate {
-  animation: tickUp 0.12s ease-out;
-}
-
-/* ── Fade-in-up utility ── */
+/* ── Fade in ── */
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(16px);
   }
   to {
     opacity: 1;
@@ -231,5 +205,5 @@
   }
 }
 .fade-in-up {
-  animation: fadeInUp 0.65s ease-out both;
+  animation: fadeInUp 0.5s ease-out both;
 }
