@@ -77,8 +77,11 @@ function DebtCounter() {
           U.S. National Debt — Live Update
         </p>
         <div
-          className="font-mono text-5xl sm:text-7xl lg:text-8xl xl:text-9xl leading-none tracking-tight tabular-nums glow-gold"
-          style={{ color: "oklch(0.78 0.155 75)" }}
+          className="font-mono leading-none tracking-tight tabular-nums glow-gold whitespace-nowrap"
+          style={{
+            color: "oklch(0.78 0.155 75)",
+            fontSize: "clamp(1.4rem, 5.5vw, 7rem)",
+          }}
           aria-label={`$${raw}`}
           data-ocid="debt.counter"
         >
