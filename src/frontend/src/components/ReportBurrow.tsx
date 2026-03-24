@@ -25,26 +25,36 @@ interface Props {
   nextId: string;
 }
 
-const emptyForm = () => ({
+type FormState = {
+  locationDescription: string;
+  latitude: string;
+  longitude: string;
+  landUse: LandUse;
+  threatLevel: ThreatLevel;
+  status: BurrowStatus;
+  notes: string;
+  reportedBy: string;
+  photo: File | null;
+};
+
+const emptyForm = (): FormState => ({
   locationDescription: "",
   latitude: "",
   longitude: "",
-  landUse: "Other" as LandUse,
-  threatLevel: "Moderate" as ThreatLevel,
-  status: "Active" as BurrowStatus,
+  landUse: "Other",
+  threatLevel: "Moderate",
+  status: "Active",
   notes: "",
   reportedBy: "",
-  photo: null as File | null,
+  photo: null,
 });
 
 export function ReportBurrow({ onReport, nextId }: Props) {
-  const [form, setForm] = useState(emptyForm());
+  const [form, setForm] = useState<FormState>(emptyForm());
   const [submitting, setSubmitting] = useState(false);
 
-  const set = <K extends keyof typeof form>(
-    field: K,
-    value: (typeof form)[K],
-  ) => setForm((prev) => ({ ...prev, [field]: value }));
+  const set = <K extends keyof FormState>(field: K, value: FormState[K]) =>
+    setForm((prev) => ({ ...prev, [field]: value }));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -74,6 +84,15 @@ export function ReportBurrow({ onReport, nextId }: Props) {
     toast.success(`Burrow ${nextId} reported — thank you for contributing!`);
     setForm(emptyForm());
     setSubmitting(false);
+  };
+
+  // Batch lat+lng update in a single state update to avoid mid-render inconsistency
+  const handlePin = (lat: number, lng: number) => {
+    setForm((prev) => ({
+      ...prev,
+      latitude: String(lat),
+      longitude: String(lng),
+    }));
   };
 
   const pinned =
@@ -130,13 +149,7 @@ export function ReportBurrow({ onReport, nextId }: Props) {
         {/* Map Pin Picker */}
         <div className="space-y-1.5">
           <Label>Pin Burrow Location on Map (optional)</Label>
-          <MapPinPicker
-            onPin={(lat, lng) => {
-              set("latitude", String(lat));
-              set("longitude", String(lng));
-            }}
-            pinned={pinned}
-          />
+          <MapPinPicker onPin={handlePin} pinned={pinned} />
         </div>
 
         {/* Land Use */}

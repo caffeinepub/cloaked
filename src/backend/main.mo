@@ -8,6 +8,10 @@ import Iter "mo:core/Iter";
 import Order "mo:core/Order";
 import AccessControl "authorization/access-control";
 import MixinAuthorization "authorization/MixinAuthorization";
+import Storage "blob-storage/Storage";
+import MixinStorage "blob-storage/Mixin";
+
+
 
 actor {
   // Privacy Score Personas
@@ -16,7 +20,6 @@ actor {
     persona : Text;
   };
 
-  // Categories
   type BrokerCategory = {
     #peopleSearch;
     #marketing;
@@ -69,10 +72,29 @@ actor {
     };
   };
 
+  // National Debt Configuration
+  type NationalDebtConfig = {
+    baselineDebtCents : Nat;
+    referenceTimestamp : Nat;
+    ratePerSecondCents : Nat;
+    usPopulation : Nat;
+    usTaxpayers : Nat;
+  };
+
+  // U.S. Debt Clock Data
+  let defaultNationalDebtConfig = {
+    baselineDebtCents = 365_500_000_000_000_0; // $36.55 trillion
+    referenceTimestamp = 1_742_860_800; // March 25 2026 00:00:00 UTC
+    ratePerSecondCents = 7_927_400; // $79,274/second
+    usPopulation = 335_000_000;
+    usTaxpayers = 150_000_000;
+  };
+
   // Initialize the user system state
   let accessControlState = AccessControl.initState();
 
   include MixinAuthorization(accessControlState);
+  include MixinStorage();
 
   // Persistent Storage
   let brokers = List.fromArray<DataBroker>([
@@ -261,6 +283,7 @@ actor {
     },
   ]);
 
+  let nationalDebtConfig : NationalDebtConfig = defaultNationalDebtConfig;
   let userProgress = Map.empty<Principal, UserProfile>();
 
   // Public Functions
@@ -336,5 +359,90 @@ actor {
       Runtime.trap("Unauthorized: Only admins can view all user profiles");
     };
     userProgress.values().toArray().sort();
+  };
+
+  // National Debt Functions
+  public query ({ caller }) func getNationalDebtConfig() : async NationalDebtConfig {
+    nationalDebtConfig;
+  };
+
+  public query ({ caller }) func getCurrentDebtTimestamp() : async Nat {
+    nationalDebtConfig.referenceTimestamp;
+  };
+
+  public query ({ caller }) func getBaselineDebtCents() : async Nat {
+    nationalDebtConfig.baselineDebtCents;
+  };
+
+  public query ({ caller }) func getRatePerSecondCents() : async Nat {
+    nationalDebtConfig.ratePerSecondCents;
+  };
+
+  public query ({ caller }) func getUSPopulation() : async Nat {
+    nationalDebtConfig.usPopulation;
+  };
+
+  public query ({ caller }) func getUSTaxpayers() : async Nat {
+    nationalDebtConfig.usTaxpayers;
+  };
+
+  // Storyboard Image Management
+  type StoryboardImage = {
+    title : Text;
+    description : Text;
+    image : Storage.ExternalBlob;
+  };
+
+  let storyboardImages = Map.empty<Nat, StoryboardImage>();
+  var nextImageId : Nat = 0;
+
+  public shared ({ caller }) func addStoryboardImage(title : Text, description : Text, image : Storage.ExternalBlob) : async Nat {
+    if (not AccessControl.isAdmin(accessControlState, caller)) {
+      Runtime.trap("Unauthorized: Only admins can add storyboard images");
+    };
+    let id = nextImageId;
+    let newImage : StoryboardImage = {
+      title;
+      description;
+      image;
+    };
+    storyboardImages.add(id, newImage);
+    nextImageId += 1;
+    id;
+  };
+
+  public query ({ caller }) func getStoryboardImages() : async [StoryboardImage] {
+    storyboardImages.values().toArray();
+  };
+
+  public query ({ caller }) func getStoryboardImage(id : Nat) : async ?StoryboardImage {
+    storyboardImages.get(id);
+  };
+
+  public shared ({ caller }) func updateStoryboardImage(id : Nat, title : Text, description : Text, image : Storage.ExternalBlob) : async () {
+    if (not AccessControl.isAdmin(accessControlState, caller)) {
+      Runtime.trap("Unauthorized: Only admins can update storyboard images");
+    };
+    switch (storyboardImages.get(id)) {
+      case (null) { Runtime.trap("Storyboard image not found") };
+      case (?existingImage) {
+        let updatedImage : StoryboardImage = {
+          title;
+          description;
+          image;
+        };
+        storyboardImages.add(id, updatedImage);
+      };
+    };
+  };
+
+  public shared ({ caller }) func deleteStoryboardImage(id : Nat) : async () {
+    if (not AccessControl.isAdmin(accessControlState, caller)) {
+      Runtime.trap("Unauthorized: Only admins can delete storyboard images");
+    };
+    if (not storyboardImages.containsKey(id)) {
+      Runtime.trap("Storyboard image not found");
+    };
+    storyboardImages.remove(id);
   };
 };

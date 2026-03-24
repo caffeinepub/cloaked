@@ -22,6 +22,14 @@ export interface DataBroker {
   'optOutUrl' : string,
   'category' : BrokerCategory,
 }
+export type ExternalBlob = Uint8Array;
+export interface NationalDebtConfig {
+  'ratePerSecondCents' : bigint,
+  'referenceTimestamp' : bigint,
+  'usTaxpayers' : bigint,
+  'baselineDebtCents' : bigint,
+  'usPopulation' : bigint,
+}
 export interface Platform {
   'name' : string,
   'removalGuideUrl' : string,
@@ -38,6 +46,11 @@ export interface PrivacyScore { 'score' : bigint, 'persona' : string }
 export type ProgressStatus = { 'notStarted' : null } |
   { 'completed' : null } |
   { 'inProgress' : null };
+export interface StoryboardImage {
+  'title' : string,
+  'description' : string,
+  'image' : ExternalBlob,
+}
 export interface UserProfile {
   'id' : Principal,
   'privacyScore' : PrivacyScore,
@@ -46,19 +59,59 @@ export interface UserProfile {
 export type UserRole = { 'admin' : null } |
   { 'user' : null } |
   { 'guest' : null };
+export interface _CaffeineStorageCreateCertificateResult {
+  'method' : string,
+  'blob_hash' : string,
+}
+export interface _CaffeineStorageRefillInformation {
+  'proposed_top_up_amount' : [] | [bigint],
+}
+export interface _CaffeineStorageRefillResult {
+  'success' : [] | [boolean],
+  'topped_up_amount' : [] | [bigint],
+}
 export interface _SERVICE {
+  '_caffeineStorageBlobIsLive' : ActorMethod<[Uint8Array], boolean>,
+  '_caffeineStorageBlobsToDelete' : ActorMethod<[], Array<Uint8Array>>,
+  '_caffeineStorageConfirmBlobDeletion' : ActorMethod<
+    [Array<Uint8Array>],
+    undefined
+  >,
+  '_caffeineStorageCreateCertificate' : ActorMethod<
+    [string],
+    _CaffeineStorageCreateCertificateResult
+  >,
+  '_caffeineStorageRefillCashier' : ActorMethod<
+    [[] | [_CaffeineStorageRefillInformation]],
+    _CaffeineStorageRefillResult
+  >,
+  '_caffeineStorageUpdateGatewayPrincipals' : ActorMethod<[], undefined>,
   '_initializeAccessControlWithSecret' : ActorMethod<[string], undefined>,
+  'addStoryboardImage' : ActorMethod<[string, string, ExternalBlob], bigint>,
   'assignCallerUserRole' : ActorMethod<[Principal, UserRole], undefined>,
+  'deleteStoryboardImage' : ActorMethod<[bigint], undefined>,
+  'getBaselineDebtCents' : ActorMethod<[], bigint>,
   'getBrokers' : ActorMethod<[], Array<DataBroker>>,
   'getBrokersWithStatus' : ActorMethod<[], Array<[DataBroker, ProgressStatus]>>,
   'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
   'getCallerUserRole' : ActorMethod<[], UserRole>,
+  'getCurrentDebtTimestamp' : ActorMethod<[], bigint>,
+  'getNationalDebtConfig' : ActorMethod<[], NationalDebtConfig>,
   'getPlatforms' : ActorMethod<[], Array<Platform>>,
   'getPlatformsWithStatus' : ActorMethod<[], Array<[Platform, ProgressStatus]>>,
+  'getRatePerSecondCents' : ActorMethod<[], bigint>,
+  'getStoryboardImage' : ActorMethod<[bigint], [] | [StoryboardImage]>,
+  'getStoryboardImages' : ActorMethod<[], Array<StoryboardImage>>,
+  'getUSPopulation' : ActorMethod<[], bigint>,
+  'getUSTaxpayers' : ActorMethod<[], bigint>,
   'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
   'getUserProfiles' : ActorMethod<[], Array<UserProfile>>,
   'isCallerAdmin' : ActorMethod<[], boolean>,
   'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
+  'updateStoryboardImage' : ActorMethod<
+    [bigint, string, string, ExternalBlob],
+    undefined
+  >,
 }
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];

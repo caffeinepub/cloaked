@@ -5,8 +5,11 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        body: ["Figtree", "system-ui", "sans-serif"],
-        sans: ["Figtree", "system-ui", "sans-serif"],
+        display: ["Anton", "Impact", "system-ui", "sans-serif"],
+        heading: ["Bebas Neue", "Anton", "Impact", "sans-serif"],
+        body: ["Space Grotesk", "system-ui", "sans-serif"],
+        sans: ["Space Grotesk", "system-ui", "sans-serif"],
+        mono: ["JetBrains Mono", "Consolas", "monospace"],
       },
       colors: {
         background: "oklch(var(--background) / <alpha-value>)",
@@ -42,15 +45,20 @@ export default {
         border: "oklch(var(--border) / <alpha-value>)",
         input: "oklch(var(--input) / <alpha-value>)",
         ring: "oklch(var(--ring) / <alpha-value>)",
+        gold: {
+          bright: "oklch(var(--gold-bright) / <alpha-value>)",
+          mid: "oklch(var(--gold-mid) / <alpha-value>)",
+          dark: "oklch(var(--gold-dark) / <alpha-value>)",
+          muted: "oklch(var(--gold-muted) / <alpha-value>)",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
-      },
-      boxShadow: {
-        card: "0 1px 4px oklch(0.15 0 0 / 0.08), 0 2px 12px oklch(0.15 0 0 / 0.06)",
-        "card-hover": "0 4px 16px oklch(0.15 0 0 / 0.12), 0 2px 8px oklch(0.15 0 0 / 0.08)",
+        xl: "0.75rem",
+        "2xl": "1rem",
+        "3xl": "1.5rem",
       },
     },
   },

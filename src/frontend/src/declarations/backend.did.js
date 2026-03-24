@@ -8,6 +8,18 @@
 
 import { IDL } from '@icp-sdk/core/candid';
 
+export const _CaffeineStorageCreateCertificateResult = IDL.Record({
+  'method' : IDL.Text,
+  'blob_hash' : IDL.Text,
+});
+export const _CaffeineStorageRefillInformation = IDL.Record({
+  'proposed_top_up_amount' : IDL.Opt(IDL.Nat),
+});
+export const _CaffeineStorageRefillResult = IDL.Record({
+  'success' : IDL.Opt(IDL.Bool),
+  'topped_up_amount' : IDL.Opt(IDL.Nat),
+});
+export const ExternalBlob = IDL.Vec(IDL.Nat8);
 export const UserRole = IDL.Variant({
   'admin' : IDL.Null,
   'user' : IDL.Null,
@@ -41,6 +53,13 @@ export const UserProfile = IDL.Record({
   'privacyScore' : PrivacyScore,
   'progress' : ProgressStatus,
 });
+export const NationalDebtConfig = IDL.Record({
+  'ratePerSecondCents' : IDL.Nat,
+  'referenceTimestamp' : IDL.Nat,
+  'usTaxpayers' : IDL.Nat,
+  'baselineDebtCents' : IDL.Nat,
+  'usPopulation' : IDL.Nat,
+});
 export const PlatformCategory = IDL.Variant({
   'media' : IDL.Null,
   'other' : IDL.Null,
@@ -55,10 +74,48 @@ export const Platform = IDL.Record({
   'description' : IDL.Text,
   'category' : PlatformCategory,
 });
+export const StoryboardImage = IDL.Record({
+  'title' : IDL.Text,
+  'description' : IDL.Text,
+  'image' : ExternalBlob,
+});
 
 export const idlService = IDL.Service({
+  '_caffeineStorageBlobIsLive' : IDL.Func(
+      [IDL.Vec(IDL.Nat8)],
+      [IDL.Bool],
+      ['query'],
+    ),
+  '_caffeineStorageBlobsToDelete' : IDL.Func(
+      [],
+      [IDL.Vec(IDL.Vec(IDL.Nat8))],
+      ['query'],
+    ),
+  '_caffeineStorageConfirmBlobDeletion' : IDL.Func(
+      [IDL.Vec(IDL.Vec(IDL.Nat8))],
+      [],
+      [],
+    ),
+  '_caffeineStorageCreateCertificate' : IDL.Func(
+      [IDL.Text],
+      [_CaffeineStorageCreateCertificateResult],
+      [],
+    ),
+  '_caffeineStorageRefillCashier' : IDL.Func(
+      [IDL.Opt(_CaffeineStorageRefillInformation)],
+      [_CaffeineStorageRefillResult],
+      [],
+    ),
+  '_caffeineStorageUpdateGatewayPrincipals' : IDL.Func([], [], []),
   '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+  'addStoryboardImage' : IDL.Func(
+      [IDL.Text, IDL.Text, ExternalBlob],
+      [IDL.Nat],
+      [],
+    ),
   'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
+  'deleteStoryboardImage' : IDL.Func([IDL.Nat], [], []),
+  'getBaselineDebtCents' : IDL.Func([], [IDL.Nat], ['query']),
   'getBrokers' : IDL.Func([], [IDL.Vec(DataBroker)], ['query']),
   'getBrokersWithStatus' : IDL.Func(
       [],
@@ -67,12 +124,23 @@ export const idlService = IDL.Service({
     ),
   'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
   'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+  'getCurrentDebtTimestamp' : IDL.Func([], [IDL.Nat], ['query']),
+  'getNationalDebtConfig' : IDL.Func([], [NationalDebtConfig], ['query']),
   'getPlatforms' : IDL.Func([], [IDL.Vec(Platform)], ['query']),
   'getPlatformsWithStatus' : IDL.Func(
       [],
       [IDL.Vec(IDL.Tuple(Platform, ProgressStatus))],
       ['query'],
     ),
+  'getRatePerSecondCents' : IDL.Func([], [IDL.Nat], ['query']),
+  'getStoryboardImage' : IDL.Func(
+      [IDL.Nat],
+      [IDL.Opt(StoryboardImage)],
+      ['query'],
+    ),
+  'getStoryboardImages' : IDL.Func([], [IDL.Vec(StoryboardImage)], ['query']),
+  'getUSPopulation' : IDL.Func([], [IDL.Nat], ['query']),
+  'getUSTaxpayers' : IDL.Func([], [IDL.Nat], ['query']),
   'getUserProfile' : IDL.Func(
       [IDL.Principal],
       [IDL.Opt(UserProfile)],
@@ -81,11 +149,28 @@ export const idlService = IDL.Service({
   'getUserProfiles' : IDL.Func([], [IDL.Vec(UserProfile)], ['query']),
   'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
   'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+  'updateStoryboardImage' : IDL.Func(
+      [IDL.Nat, IDL.Text, IDL.Text, ExternalBlob],
+      [],
+      [],
+    ),
 });
 
 export const idlInitArgs = [];
 
 export const idlFactory = ({ IDL }) => {
+  const _CaffeineStorageCreateCertificateResult = IDL.Record({
+    'method' : IDL.Text,
+    'blob_hash' : IDL.Text,
+  });
+  const _CaffeineStorageRefillInformation = IDL.Record({
+    'proposed_top_up_amount' : IDL.Opt(IDL.Nat),
+  });
+  const _CaffeineStorageRefillResult = IDL.Record({
+    'success' : IDL.Opt(IDL.Bool),
+    'topped_up_amount' : IDL.Opt(IDL.Nat),
+  });
+  const ExternalBlob = IDL.Vec(IDL.Nat8);
   const UserRole = IDL.Variant({
     'admin' : IDL.Null,
     'user' : IDL.Null,
@@ -116,6 +201,13 @@ export const idlFactory = ({ IDL }) => {
     'privacyScore' : PrivacyScore,
     'progress' : ProgressStatus,
   });
+  const NationalDebtConfig = IDL.Record({
+    'ratePerSecondCents' : IDL.Nat,
+    'referenceTimestamp' : IDL.Nat,
+    'usTaxpayers' : IDL.Nat,
+    'baselineDebtCents' : IDL.Nat,
+    'usPopulation' : IDL.Nat,
+  });
   const PlatformCategory = IDL.Variant({
     'media' : IDL.Null,
     'other' : IDL.Null,
@@ -130,10 +222,48 @@ export const idlFactory = ({ IDL }) => {
     'description' : IDL.Text,
     'category' : PlatformCategory,
   });
+  const StoryboardImage = IDL.Record({
+    'title' : IDL.Text,
+    'description' : IDL.Text,
+    'image' : ExternalBlob,
+  });
   
   return IDL.Service({
+    '_caffeineStorageBlobIsLive' : IDL.Func(
+        [IDL.Vec(IDL.Nat8)],
+        [IDL.Bool],
+        ['query'],
+      ),
+    '_caffeineStorageBlobsToDelete' : IDL.Func(
+        [],
+        [IDL.Vec(IDL.Vec(IDL.Nat8))],
+        ['query'],
+      ),
+    '_caffeineStorageConfirmBlobDeletion' : IDL.Func(
+        [IDL.Vec(IDL.Vec(IDL.Nat8))],
+        [],
+        [],
+      ),
+    '_caffeineStorageCreateCertificate' : IDL.Func(
+        [IDL.Text],
+        [_CaffeineStorageCreateCertificateResult],
+        [],
+      ),
+    '_caffeineStorageRefillCashier' : IDL.Func(
+        [IDL.Opt(_CaffeineStorageRefillInformation)],
+        [_CaffeineStorageRefillResult],
+        [],
+      ),
+    '_caffeineStorageUpdateGatewayPrincipals' : IDL.Func([], [], []),
     '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+    'addStoryboardImage' : IDL.Func(
+        [IDL.Text, IDL.Text, ExternalBlob],
+        [IDL.Nat],
+        [],
+      ),
     'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
+    'deleteStoryboardImage' : IDL.Func([IDL.Nat], [], []),
+    'getBaselineDebtCents' : IDL.Func([], [IDL.Nat], ['query']),
     'getBrokers' : IDL.Func([], [IDL.Vec(DataBroker)], ['query']),
     'getBrokersWithStatus' : IDL.Func(
         [],
@@ -142,12 +272,23 @@ export const idlFactory = ({ IDL }) => {
       ),
     'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
     'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+    'getCurrentDebtTimestamp' : IDL.Func([], [IDL.Nat], ['query']),
+    'getNationalDebtConfig' : IDL.Func([], [NationalDebtConfig], ['query']),
     'getPlatforms' : IDL.Func([], [IDL.Vec(Platform)], ['query']),
     'getPlatformsWithStatus' : IDL.Func(
         [],
         [IDL.Vec(IDL.Tuple(Platform, ProgressStatus))],
         ['query'],
       ),
+    'getRatePerSecondCents' : IDL.Func([], [IDL.Nat], ['query']),
+    'getStoryboardImage' : IDL.Func(
+        [IDL.Nat],
+        [IDL.Opt(StoryboardImage)],
+        ['query'],
+      ),
+    'getStoryboardImages' : IDL.Func([], [IDL.Vec(StoryboardImage)], ['query']),
+    'getUSPopulation' : IDL.Func([], [IDL.Nat], ['query']),
+    'getUSTaxpayers' : IDL.Func([], [IDL.Nat], ['query']),
     'getUserProfile' : IDL.Func(
         [IDL.Principal],
         [IDL.Opt(UserProfile)],
@@ -156,6 +297,11 @@ export const idlFactory = ({ IDL }) => {
     'getUserProfiles' : IDL.Func([], [IDL.Vec(UserProfile)], ['query']),
     'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
     'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+    'updateStoryboardImage' : IDL.Func(
+        [IDL.Nat, IDL.Text, IDL.Text, ExternalBlob],
+        [],
+        [],
+      ),
   });
 };
 

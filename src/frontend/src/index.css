@@ -1,4 +1,12 @@
-@import url("https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/assets/fonts/JetBrainsMono.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
 
 @tailwind base;
 @tailwind components;
@@ -6,67 +14,34 @@
 
 @layer base {
   :root {
-    /* Page background: warm sand */
-    --background: 0.87 0.038 85;
-    /* Foreground: body text */
-    --foreground: 0.15 0 0;
-
-    /* Cards */
-    --card: 0.97 0.01 85;
-    --card-foreground: 0.15 0 0;
-
-    /* Popover */
-    --popover: 0.97 0.01 85;
-    --popover-foreground: 0.15 0 0;
-
-    /* Primary: dark forest green */
-    --primary: 0.3 0.055 155;
-    --primary-foreground: 0.97 0.01 85;
-
-    /* Secondary: sage green header */
-    --secondary: 0.44 0.04 155;
-    --secondary-foreground: 0.97 0.01 85;
-
-    /* Muted */
-    --muted: 0.84 0.018 85;
-    --muted-foreground: 0.47 0 0;
-
-    /* Accent: tan button */
-    --accent: 0.77 0.06 85;
-    --accent-foreground: 0.2 0 0;
-
-    /* Destructive */
-    --destructive: 0.5 0.17 30;
-    --destructive-foreground: 0.97 0.01 85;
-
-    /* Border / input */
-    --border: 0.84 0.018 85;
-    --input: 0.84 0.018 85;
-    --ring: 0.44 0.04 155;
-
-    /* Status colors */
-    --status-active: 0.44 0.07 155;
-    --status-active-bg: 0.9 0.04 155;
-    --status-abandoned: 0.48 0 0;
-    --status-abandoned-bg: 0.9 0 0;
-    --status-potential: 0.62 0.12 65;
-    --status-potential-bg: 0.92 0.06 65;
-
-    /* Threat colors */
-    --threat-low: 0.55 0.09 130;
-    --threat-low-bg: 0.9 0.06 130;
-    --threat-moderate: 0.55 0.1 85;
-    --threat-moderate-bg: 0.92 0.08 85;
-    --threat-high: 0.5 0.17 30;
-    --threat-high-bg: 0.92 0.06 30;
-
-    /* Footer */
-    --footer: 0.2 0 0;
-
-    /* Title band */
-    --title-band: 0.3 0.055 155;
-
+    /* Money Masters Cinematic Dark Gold Palette */
+    --background: 0.08 0.002 280;
+    --foreground: 0.97 0 0;
+    --card: 0.11 0.004 280;
+    --card-foreground: 0.97 0 0;
+    --popover: 0.11 0.004 280;
+    --popover-foreground: 0.97 0 0;
+    /* Gold as primary */
+    --primary: 0.72 0.13 75;
+    --primary-foreground: 0.08 0.002 280;
+    --secondary: 0.14 0.006 280;
+    --secondary-foreground: 0.97 0 0;
+    --muted: 0.14 0.005 280;
+    --muted-foreground: 0.55 0.008 280;
+    --accent: 0.72 0.13 75;
+    --accent-foreground: 0.08 0.002 280;
+    --destructive: 0.55 0.22 25;
+    --destructive-foreground: 0.97 0 0;
+    --border: 0.2 0.005 280;
+    --input: 0.18 0.005 280;
+    --ring: 0.72 0.13 75;
     --radius: 0.5rem;
+    /* Named gold tokens */
+    --gold-bright: 0.76 0.155 75;
+    --gold-mid: 0.68 0.13 75;
+    --gold-dark: 0.58 0.1 75;
+    --gold-muted: 0.45 0.07 75;
+    --text-secondary: 0.8 0.005 280;
   }
 }
 
@@ -74,7 +49,187 @@
   * {
     @apply border-border;
   }
-  body {
-    @apply bg-background text-foreground font-body;
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
   }
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Space Grotesk", system-ui, sans-serif;
+    overflow-x: hidden;
+  }
+}
+
+/* ── Gold glow on LED digits ── */
+.glow-gold {
+  text-shadow: 0 0 8px oklch(0.76 0.155 75 / 0.95), 0 0 20px
+    oklch(0.72 0.13 75 / 0.7), 0 0 50px oklch(0.62 0.11 75 / 0.4), 0 0 100px
+    oklch(0.55 0.09 75 / 0.2);
+}
+
+.glow-gold-subtle {
+  text-shadow: 0 0 6px oklch(0.76 0.155 75 / 0.6), 0 0 18px
+    oklch(0.72 0.13 75 / 0.35);
+}
+
+.box-glow-gold {
+  box-shadow: 0 0 0 1px oklch(0.72 0.13 75 / 0.35), 0 0 24px
+    oklch(0.68 0.13 75 / 0.2), 0 0 60px oklch(0.58 0.1 75 / 0.1), inset 0 0 30px
+    oklch(0.72 0.13 75 / 0.04);
+}
+
+.box-glow-gold-strong {
+  box-shadow: 0 0 0 1px oklch(0.72 0.13 75 / 0.6), 0 0 30px
+    oklch(0.68 0.13 75 / 0.35), 0 0 80px oklch(0.58 0.1 75 / 0.18), inset 0 0
+    40px oklch(0.72 0.13 75 / 0.06);
+}
+
+/* ── Scanlines on the counter ── */
+.scanlines {
+  position: relative;
+  overflow: hidden;
+}
+.scanlines::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    oklch(0 0 0 / 0.1) 3px,
+    oklch(0 0 0 / 0.1) 5px
+  );
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ── Hero background ── */
+.hero-bg {
+  position: relative;
+  background-color: oklch(0.06 0.002 280);
+  background-image: radial-gradient(
+      ellipse at 50% 0%,
+      oklch(0.72 0.13 75 / 0.07) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse at 20% 80%,
+      oklch(0.55 0.09 75 / 0.05) 0%,
+      transparent 45%
+    ),
+    radial-gradient(
+      ellipse at 80% 60%,
+      oklch(0.68 0.13 75 / 0.04) 0%,
+      transparent 40%
+    );
+}
+
+.hero-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/assets/generated/hero-money-bg.dim_1920x1080.jpg");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.12;
+  z-index: 0;
+}
+
+/* ── Page background ── */
+.page-bg {
+  background-color: oklch(0.08 0.002 280);
+  background-image: radial-gradient(
+    ellipse 100% 50% at 50% 0%,
+    oklch(0.72 0.13 75 / 0.06) 0%,
+    transparent 60%
+  );
+}
+
+/* ── Gold top bar ── */
+.gold-topbar {
+  background: linear-gradient(
+    90deg,
+    oklch(0.55 0.09 75) 0%,
+    oklch(0.76 0.155 75) 40%,
+    oklch(0.72 0.13 75) 60%,
+    oklch(0.58 0.1 75) 100%
+  );
+  height: 3px;
+}
+
+/* ── Section divider ── */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    oklch(0.72 0.13 75 / 0.4) 30%,
+    oklch(0.76 0.155 75 / 0.6) 50%,
+    oklch(0.72 0.13 75 / 0.4) 70%,
+    transparent
+  );
+}
+
+/* ── Timeline line ── */
+.timeline-line {
+  background: linear-gradient(
+    180deg,
+    oklch(0.55 0.09 75 / 0.3),
+    oklch(0.76 0.155 75 / 0.7) 20%,
+    oklch(0.76 0.155 75 / 0.7) 80%,
+    oklch(0.55 0.09 75 / 0.3)
+  );
+}
+
+/* ── Inflation bar ── */
+.inflation-bar-fill {
+  background: linear-gradient(90deg, oklch(0.58 0.1 75), oklch(0.76 0.155 75));
+  box-shadow: 0 0 8px oklch(0.72 0.13 75 / 0.5);
+}
+
+/* ── Live pulse ── */
+@keyframes livePulse {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 6px oklch(0.76 0.155 75);
+  }
+  50% {
+    opacity: 0.55;
+    box-shadow: 0 0 2px oklch(0.72 0.13 75);
+  }
+}
+.live-pulse {
+  animation: livePulse 2s ease-in-out infinite;
+}
+
+/* ── Counter digit tick ── */
+@keyframes tickUp {
+  0% {
+    transform: translateY(20%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.tick-animate {
+  animation: tickUp 0.12s ease-out;
+}
+
+/* ── Fade-in-up utility ── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fade-in-up {
+  animation: fadeInUp 0.65s ease-out both;
 }
