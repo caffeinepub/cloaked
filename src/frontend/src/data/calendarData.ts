@@ -18,6 +18,7 @@ export const MONTHS: MonthData[] = [
       "Citrus peak — navel oranges, tangerines, grapefruit, kumquats",
       "Strawberries beginning",
       "Loquats flowering",
+      "Late avocados (some cold-hardy varieties like Lula) finishing up",
     ],
     plantNow: [
       "Broccoli, cabbage, cauliflower, kale, collards",
@@ -41,7 +42,7 @@ export const MONTHS: MonthData[] = [
       "Citrus still heavy",
       "Strawberries peak",
       "Loquats ripening late February",
-      "Avocados (early varieties) beginning to size up",
+      "Avocado trees flowering — fruit won’t be ready until late summer",
     ],
     plantNow: [
       "Tomatoes (transplant out after Feb 15)",
@@ -65,13 +66,14 @@ export const MONTHS: MonthData[] = [
       "Strawberries winding down",
       "Loquats ripe",
       "Early mulberries",
-      "Avocados growing",
       "Blueberries beginning",
+      "Avocados developing on tree — months from harvest",
     ],
     plantNow: [
       "Tomatoes, peppers, squash, cucumbers, beans, sweet corn",
       "Basil and herbs",
       "Last chance for cool-season crops",
+      "Start Everglades tomato transplants — heat-tolerant heirloom that thrives all summer",
     ],
     weatherPests:
       "Aphids, caterpillars, stink bugs on tomatoes beginning. Dry season peak — water carefully.",
@@ -90,12 +92,14 @@ export const MONTHS: MonthData[] = [
       "Mulberries peak (Morus rubra and cultivars)",
       "Blueberries peak",
       "Loquats finishing",
-      "Avocados developing",
+      "Everglades tomatoes beginning to produce",
     ],
     plantNow: [
       "Sweet potatoes, Malabar spinach, okra",
-      "Southern peas (black-eyed peas), calabaza squash, pigeon peas",
+      "Southern peas (black-eyed peas), Seminole pumpkin, pigeon peas",
+      "Calabaza squash",
       "Heat-tolerant herbs: lemongrass, Cuban oregano, rosemary, chives",
+      "Everglades tomato transplants into garden — thrives in heat where regular tomatoes fail",
     ],
     weatherPests:
       "Spider mites intensify in heat and drought. Stink bugs. Whitefly. Deep irrigation critical.",
@@ -112,16 +116,17 @@ export const MONTHS: MonthData[] = [
       "Hot and humid — 85–92°F. Rainy season approaching. First afternoon thunderstorms.",
     inSeason: [
       "Mulberries finishing",
-      "Mangoes sizing up and coloring (early varieties)",
+      "Mango trees in full fruit set — sizing up (harvest still weeks away)",
       "Lychee ripening",
-      "Avocados continuing",
       "Jaboticaba may fruit",
+      "Everglades tomatoes producing well into summer heat",
+      "Seminole pumpkin vines establishing",
     ],
     plantNow: [
-      "Okra, sweet potatoes, Southern peas, calabaza, Malabar spinach",
+      "Okra, sweet potatoes, Southern peas, Seminole pumpkin, Malabar spinach",
       "Tropical herbs",
       "Cassava, moringa, pigeon peas",
-      "Not the time for tomatoes or peppers",
+      "Not the time for regular tomatoes or peppers",
     ],
     weatherPests:
       "Mango seed weevil. Lychee erinose mite. Aphids on new growth. Watch lychee for cracking after drought.",
@@ -137,10 +142,12 @@ export const MONTHS: MonthData[] = [
     season:
       "Rainy season in full swing — 88–94°F. Hot, humid, daily thunderstorms. Hurricane season begins.",
     inSeason: [
-      "Mangoes peak — Haden, Tommy Atkins, Kent, Keitt staggered through August",
-      "Avocados beginning to ripen (Choquette, Hall varieties)",
+      "Mangoes beginning to ripen — early varieties like Haden first",
       "Carambola (star fruit) first crop",
       "Passion fruit",
+      "Everglades tomatoes — prolific through summer",
+      "Seminole pumpkin vines sprawling, fruit setting",
+      "Avocados still sizing up — most varieties weeks from ripe",
     ],
     plantNow: [
       "Okra, sweet potatoes, Southern peas, tropical basil, moringa, lemongrass",
@@ -162,11 +169,13 @@ export const MONTHS: MonthData[] = [
     season:
       "Peak summer heat and rain — 90–95°F. High humidity. Active hurricane season.",
     inSeason: [
-      "Mangoes continuing (late varieties)",
-      "Avocados ripening",
+      "Mangoes peak — Tommy Atkins, Kent, Keitt staggered through August",
+      "Avocados — some early varieties (Choquette) beginning to ripen late July",
       "Carambola",
       "Passion fruit",
       "Surinam cherry",
+      "Seminole pumpkin ripening — harvest when skin hardens and stem dries",
+      "Everglades tomatoes still producing",
     ],
     plantNow: [
       "Okra, sweet potatoes, Southern peas, moringa",
@@ -178,6 +187,7 @@ export const MONTHS: MonthData[] = [
       "Storm prep — check stakes, secure pots, trim hazardous branches",
       "Fertilize tropicals lightly if still pushing growth",
       "Harvest mangoes before storms if close to ripe",
+      "Cure Seminole pumpkins in a dry spot after harvest — they store for months",
     ],
   },
   {
@@ -185,11 +195,12 @@ export const MONTHS: MonthData[] = [
     shortMonth: "Aug",
     season: "Still hot and wet — 89–94°F. Slight daylight shortening begins.",
     inSeason: [
-      "Late mangoes (Keitt finishing)",
-      "Avocados peak (Choquette)",
+      "Late mangoes — Keitt finishing out the season",
+      "Avocados entering peak season — Choquette, Hall, and others ripening",
       "Carambola continuing",
       "Guava",
       "Soursop sizing up",
+      "Seminole pumpkin — additional harvest if vines re-set fruit",
     ],
     plantNow: [
       "Sweet potatoes, Southern peas, okra finishing season",
@@ -211,10 +222,10 @@ export const MONTHS: MonthData[] = [
     season:
       "Still hot and wet but moderating. Rainy season tapering. Peak hurricane month.",
     inSeason: [
+      "Avocados — prime harvest month for many varieties",
       "Carambola second crop",
       "Guava",
       "Soursop ripening",
-      "Avocados finishing",
       "Sugar apple (atemoya) ripening",
     ],
     plantNow: [
@@ -237,6 +248,7 @@ export const MONTHS: MonthData[] = [
     season:
       "Drying out. Cooler nights in the 60s. Warm pleasant days in the low 80s. Rainy season ending.",
     inSeason: [
+      "Avocados — excellent fall harvest continues; late varieties like Monroe ripening",
       "Carambola prolific",
       "Sugar apple",
       "Guava",
@@ -263,7 +275,7 @@ export const MONTHS: MonthData[] = [
       "Cooler and drying — nights 50s to 60s, days 70s to 80s. Ideal Florida weather.",
     inSeason: [
       "Citrus beginning — early tangerines, Hamlin oranges",
-      "Avocado late varieties finishing",
+      "Late avocados (Lula, Monroe) — hanging on into early winter in good years",
       "Carambola still producing",
       "Papaya",
       "Bananas",
@@ -291,6 +303,7 @@ export const MONTHS: MonthData[] = [
       "Citrus prime — navel oranges, tangerines, grapefruit, temples",
       "Strawberries growing",
       "Loquats budding and blooming",
+      "Some late cold-hardy avocado varieties (Lula) may still be finishing",
     ],
     plantNow: [
       "Lettuce, kale, spinach, collards, carrots, beets, radishes, snap peas",
@@ -310,7 +323,9 @@ export const HOT_WEATHER_CROPS = [
   "Okra",
   "Sweet potatoes",
   "Southern peas / black-eyed peas",
+  "Seminole pumpkin (heirloom — heat & drought tolerant, stores for months)",
   "Calabaza squash",
+  "Everglades tomato (heirloom cherry — produces through summer heat)",
   "Malabar spinach",
   "Pigeon peas",
   "Moringa",
@@ -351,4 +366,5 @@ export const YEAR_ROUND_CROPS = [
   "Hot peppers (perennial in FL)",
   "Pigeon peas (perennial)",
   "Cassava",
+  "Everglades tomato (spring start, produces through summer and fall)",
 ];

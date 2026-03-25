@@ -2,6 +2,7 @@ import AboutTab from "@/components/AboutTab";
 import CalendarTab from "@/components/CalendarTab";
 import GalleryTab from "@/components/GalleryTab";
 import ShopTab from "@/components/ShopTab";
+import VisitorCounter from "@/components/VisitorCounter";
 import { Toaster } from "@/components/ui/sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Camera, Heart, Leaf, ShoppingBasket } from "lucide-react";
@@ -26,7 +27,7 @@ export default function App() {
             </div>
             <div>
               <h1 className="font-display text-2xl sm:text-3xl font-bold leading-tight text-primary-foreground">
-                Free Soil Gardens
+                Space Coast Garden Guide
               </h1>
               <p className="text-primary-foreground/70 text-sm font-sans">
                 East Central Florida · Zone 9b/10a · Brevard County
@@ -102,6 +103,9 @@ export default function App() {
           </TabsContent>
         </Tabs>
       </main>
+
+      {/* Visitor Counter */}
+      <VisitorCounter />
 
       {/* Footer */}
       <footer className="border-t border-border bg-card py-4 mt-auto">
