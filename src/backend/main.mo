@@ -6,10 +6,10 @@ import Principal "mo:core/Principal";
 import Runtime "mo:core/Runtime";
 import Iter "mo:core/Iter";
 import Order "mo:core/Order";
-import AccessControl "authorization/access-control";
-import MixinAuthorization "authorization/MixinAuthorization";
-import Storage "blob-storage/Storage";
-import MixinStorage "blob-storage/Mixin";
+import AccessControl "mo:caffeineai-authorization/access-control";
+import MixinAuthorization "mo:caffeineai-authorization/MixinAuthorization";
+import Storage "mo:caffeineai-object-storage/Storage";
+import MixinObjectStorage "mo:caffeineai-object-storage/Mixin";
 
 
 
@@ -94,7 +94,7 @@ actor {
   let accessControlState = AccessControl.initState();
 
   include MixinAuthorization(accessControlState);
-  include MixinStorage();
+  include MixinObjectStorage();
 
   // Persistent Storage
   let brokers = List.fromArray<DataBroker>([

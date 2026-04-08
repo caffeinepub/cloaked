@@ -1,0 +1,125 @@
+type _ImmutableObjectStorageRefillResult = 
+ record {
+   success: opt bool;
+   topped_up_amount: opt nat;
+ };
+type _ImmutableObjectStorageRefillInformation = record {
+                                                  proposed_top_up_amount:
+                                                   opt nat;};
+type _ImmutableObjectStorageCreateCertificateResult = 
+ record {
+   blob_hash: text;
+   method: text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UserProfile = 
+ record {
+   id: principal;
+   privacyScore: PrivacyScore;
+   progress: ProgressStatus;
+ };
+type StoryboardImage = 
+ record {
+   description: text;
+   image: ExternalBlob;
+   title: text;
+ };
+type ProgressStatus = 
+ variant {
+   completed;
+   inProgress;
+   notStarted;
+ };
+type PrivacyScore = 
+ record {
+   persona: text;
+   score: nat;
+ };
+type PlatformCategory = 
+ variant {
+   dataAggregator;
+   eCommerce;
+   media;
+   other;
+   searchEngine;
+   socialMedia;
+ };
+type Platform = 
+ record {
+   category: PlatformCategory;
+   description: text;
+   name: text;
+   removalGuideUrl: text;
+ };
+type NationalDebtConfig = 
+ record {
+   baselineDebtCents: nat;
+   ratePerSecondCents: nat;
+   referenceTimestamp: nat;
+   usPopulation: nat;
+   usTaxpayers: nat;
+ };
+type ExternalBlob = blob;
+type DataBroker = 
+ record {
+   category: BrokerCategory;
+   description: text;
+   name: text;
+   optOutUrl: text;
+ };
+type BrokerCategory = 
+ variant {
+   backgroundCheck;
+   financial;
+   marketing;
+   other;
+   peopleSearch;
+   publicRecords;
+ };
+service : {
+  _immutableObjectStorageBlobsAreLive: (hashes: vec blob) -> (vec bool) query;
+  _immutableObjectStorageBlobsToDelete: () -> (vec blob) query;
+  _immutableObjectStorageConfirmBlobDeletion: (blobs: vec blob) -> ();
+  _immutableObjectStorageCreateCertificate: (blobHash: text) ->
+   (_ImmutableObjectStorageCreateCertificateResult);
+  _immutableObjectStorageRefillCashier: (refillInformation:
+   opt _ImmutableObjectStorageRefillInformation) ->
+   (_ImmutableObjectStorageRefillResult);
+  _immutableObjectStorageUpdateGatewayPrincipals: () -> ();
+  _initializeAccessControl: () -> ();
+  addStoryboardImage: (title: text, description: text, image:
+   ExternalBlob) -> (nat);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  deleteStoryboardImage: (id: nat) -> ();
+  getBaselineDebtCents: () -> (nat) query;
+  getBrokers: () -> (vec DataBroker) query;
+  getBrokersWithStatus: () -> (vec record {
+                                     DataBroker;
+                                     ProgressStatus;
+                                   }) query;
+  getCallerUserProfile: () -> (opt UserProfile) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getCurrentDebtTimestamp: () -> (nat) query;
+  getNationalDebtConfig: () -> (NationalDebtConfig) query;
+  getPlatforms: () -> (vec Platform) query;
+  getPlatformsWithStatus: () -> (vec record {
+                                       Platform;
+                                       ProgressStatus;
+                                     }) query;
+  getRatePerSecondCents: () -> (nat) query;
+  getStoryboardImage: (id: nat) -> (opt StoryboardImage) query;
+  getStoryboardImages: () -> (vec StoryboardImage) query;
+  getUSPopulation: () -> (nat) query;
+  getUSTaxpayers: () -> (nat) query;
+  getUserProfile: (user: principal) -> (opt UserProfile) query;
+  getUserProfiles: () -> (vec UserProfile) query;
+  isCallerAdmin: () -> (bool) query;
+  saveCallerUserProfile: (user: UserProfile) -> ();
+  updateStoryboardImage: (id: nat, title: text, description: text, image:
+   ExternalBlob) -> ();
+}

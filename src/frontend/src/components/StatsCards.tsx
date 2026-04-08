@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import type { NationalDebtConfig } from "../backend.d";
+import type { NationalDebtConfig } from "../hooks/useDebtClock";
 
 function StatCard({
   label,

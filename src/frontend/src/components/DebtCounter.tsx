@@ -1,7 +1,9 @@
 import { motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import type { NationalDebtConfig } from "../backend.d";
-import { calcCurrentDebtExact } from "../hooks/useDebtClock";
+import {
+  type NationalDebtConfig,
+  calcCurrentDebtExact,
+} from "../hooks/useDebtClock";
 
 function formatDebt(dollars: number): string {
   return Math.floor(dollars).toLocaleString("en-US");

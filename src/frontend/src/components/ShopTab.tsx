@@ -18,9 +18,9 @@ interface Listing {
 const LISTINGS: Listing[] = [
   {
     id: 1,
-    name: "Mulberry Tree (Dwarf Everbearing)",
+    name: "Persian Mulberry Tree",
     description:
-      "A compact mulberry perfect for containers or small yards. Produces sweet purple-black berries almost year-round in Florida. 3-gallon pot, approx 18–24 inches tall.",
+      "Morus nigra — the real mulberry. Full-size tree producing large, deeply flavored dark berries with a richness unmatched by any dwarf variety. Prized for centuries, thrives in Florida's climate. 3-gallon pot, approx 2–3 feet tall.",
     price: "$25",
     available: true,
     image: "/assets/generated/mulberry-tree.dim_400x400.jpg",
@@ -58,13 +58,43 @@ const LISTINGS: Listing[] = [
   },
   {
     id: 5,
-    name: "Soursop Tree (Grafted)",
+    name: "Rosemary Plant",
     description:
-      "Annona muricata, grafted for earlier fruiting. Tropical Florida tree with creamy, tangy white flesh. 3-gallon pot.",
+      "Robust culinary rosemary — fragrant, flavorful, and surprisingly tough in Florida's heat. Thrives in containers or garden beds with good drainage. Harvest year-round for cooking, teas, and roasting.",
+    price: "$6",
+    available: true,
+    image: "/assets/generated/rosemary-plant.dim_400x400.jpg",
+    tag: "Herb",
+  },
+  {
+    id: 6,
+    name: "Thai Hot Pepper Plant",
+    description:
+      "Vigorous producer of small, intensely hot peppers that love Florida's heat. Loaded with clusters of fruit from spring through fall. Perfect for containers or raised beds — a must for any hot sauce garden.",
+    price: "$5",
+    available: true,
+    image: "/assets/generated/thai-hot-pepper.dim_400x400.jpg",
+    tag: "Pepper",
+  },
+  {
+    id: 7,
+    name: "5-Gallon Coconut Palm",
+    description:
+      "A true Florida dream — young coconut palm in a 5-gallon container, ready to establish roots in your yard. Thrives in our coastal heat and sandy soil. Give it full sun, occasional deep water, and patience. Tropical abundance starts here.",
     price: "$35",
-    available: false,
-    image: "",
-    tag: "Fruit Tree",
+    available: true,
+    image: "/assets/generated/coconut-palm.dim_400x400.jpg",
+    tag: "Palm Tree",
+  },
+  {
+    id: 8,
+    name: "Turmeric Plant",
+    description:
+      "Curcuma longa — the golden root. Grown from rhizome divisions, this lush tropical grower thrives in Florida's warm, humid summers. Harvest the fresh roots in late fall for cooking, juicing, or replanting. Anti-inflammatory, anti-everything-bad.",
+    price: "$8",
+    available: true,
+    image: "/assets/generated/turmeric-plant.dim_400x400.jpg",
+    tag: "Root Herb",
   },
 ];
 
@@ -107,18 +137,25 @@ export default function ShopTab() {
                   src={listing.image}
                   alt={listing.name}
                   className="w-full h-full object-cover"
-                />
-              ) : (
-                <div
-                  className="w-full h-full flex items-center justify-center"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, oklch(0.5 0.115 42) 0%, oklch(0.4 0.07 60) 100%)",
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    target.style.display = "none";
+                    const fallback =
+                      target.nextElementSibling as HTMLElement | null;
+                    if (fallback) fallback.style.display = "flex";
                   }}
-                >
-                  <span className="text-4xl">🌱</span>
-                </div>
-              )}
+                />
+              ) : null}
+              <div
+                className="w-full h-full items-center justify-center"
+                style={{
+                  display: listing.image ? "none" : "flex",
+                  background:
+                    "linear-gradient(135deg, oklch(0.42 0.09 148) 0%, oklch(0.35 0.07 160) 100%)",
+                }}
+              >
+                <span className="text-4xl">🌿</span>
+              </div>
               <div className="absolute top-2 left-2 flex gap-1">
                 <span
                   className="text-xs font-sans px-2 py-0.5 rounded-full"

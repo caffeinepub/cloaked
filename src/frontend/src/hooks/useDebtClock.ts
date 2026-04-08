@@ -1,24 +1,25 @@
 import { useQuery } from "@tanstack/react-query";
-import type { NationalDebtConfig } from "../backend.d";
-import { useActor } from "./useActor";
+
+export interface NationalDebtConfig {
+  baselineDebtCents: bigint;
+  referenceTimestamp: bigint;
+  ratePerSecondCents: bigint;
+  usPopulation: bigint;
+  usTaxpayers: bigint;
+}
 
 export function useNationalDebtConfig() {
-  const { actor, isFetching } = useActor();
   return useQuery<NationalDebtConfig>({
     queryKey: ["nationalDebtConfig"],
     queryFn: async () => {
-      if (!actor) {
-        return {
-          baselineDebtCents: BigInt("3655012345678900"),
-          referenceTimestamp: BigInt(Math.floor(Date.now() / 1000)),
-          ratePerSecondCents: BigInt("106400"),
-          usPopulation: BigInt("335000000"),
-          usTaxpayers: BigInt("150000000"),
-        };
-      }
-      return actor.getNationalDebtConfig();
+      return {
+        baselineDebtCents: BigInt("3655012345678900"),
+        referenceTimestamp: BigInt(Math.floor(Date.now() / 1000)),
+        ratePerSecondCents: BigInt("106400"),
+        usPopulation: BigInt("335000000"),
+        usTaxpayers: BigInt("150000000"),
+      };
     },
-    enabled: !isFetching,
     staleTime: 60_000,
     refetchInterval: 300_000,
   });

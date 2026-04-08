@@ -31,12 +31,12 @@ export default function AboutTab() {
               className="w-5 h-5"
               style={{ color: "oklch(0.33 0.072 145)" }}
             />
-            About Free Soil Gardens
+            About Space Coast Garden Guide
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3 text-sm font-sans text-foreground/90 leading-relaxed">
           <p>
-            Free Soil Gardens is a small boutique garden and edible fruit
+            Space Coast Garden Guide is a small boutique garden and edible fruit
             operation in East Central Florida. We grow subtropical and tropical
             fruits, edible trees, and seasonal vegetables in Zone 9b/10a.
           </p>

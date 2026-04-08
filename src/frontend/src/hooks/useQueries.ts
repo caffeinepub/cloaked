@@ -1,6 +1,42 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { ProgressStatus } from "../backend";
-import type { DataBroker, Platform } from "../backend";
+
+export enum ProgressStatus {
+  notStarted = "notStarted",
+  inProgress = "inProgress",
+  completed = "completed",
+}
+
+export enum BrokerCategory {
+  backgroundCheck = "backgroundCheck",
+  marketing = "marketing",
+  peopleSearch = "peopleSearch",
+  publicRecords = "publicRecords",
+  financial = "financial",
+  other = "other",
+}
+
+export enum PlatformCategory {
+  socialMedia = "socialMedia",
+  searchEngine = "searchEngine",
+  eCommerce = "eCommerce",
+  dataAggregator = "dataAggregator",
+  media = "media",
+  other = "other",
+}
+
+export interface DataBroker {
+  name: string;
+  description: string;
+  optOutUrl: string;
+  category: string;
+}
+
+export interface Platform {
+  name: string;
+  description: string;
+  removalGuideUrl: string;
+  category: string;
+}
 
 export type BrokerWithStatus = { broker: DataBroker; status: ProgressStatus };
 export type PlatformWithStatus = { platform: Platform; status: ProgressStatus };

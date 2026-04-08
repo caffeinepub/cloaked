@@ -1,0 +1,97 @@
+// Version: 1.0.0
+type BrokerCategory__264591529 =
+  {
+    #backgroundCheck;
+    #financial;
+    #marketing;
+    #other;
+    #peopleSearch;
+    #publicRecords
+  };
+type DataBroker__533860612 =
+  {
+    category : BrokerCategory__264591529;
+    description : Text;
+    name : Text;
+    optOutUrl : Text
+  };
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type ExternalBlob__246066408 = Blob;
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type Map__158565046<K, V> = Map__297112838<K, V>;
+type Map__297112838<K, V> =
+  {var root : Node__46230540<K, V>; var size : Nat__490723111};
+type Map__605269027<K, V> = Map__158565046<K, V>;
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type PlatformCategory__765240171 =
+  {#dataAggregator; #eCommerce; #media; #other; #searchEngine; #socialMedia};
+type Platform__911205525 =
+  {
+    category : PlatformCategory__765240171;
+    description : Text;
+    name : Text;
+    removalGuideUrl : Text
+  };
+type PrivacyScore__53873720 = {persona : Text; score : Nat};
+type ProgressStatus__586765659 = {#completed; #inProgress; #notStarted};
+type StoryboardImage__4347003 =
+  {description : Text; image : ExternalBlob__246066408; title : Text};
+type UserProfile__491224006 =
+  {
+    id : Principal;
+    privacyScore : PrivacyScore__53873720;
+    progress : ProgressStatus__586765659
+  };
+type UserRole__1054455867 = {#admin; #guest; #user};
+actor {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__605269027<Principal, UserRole__1054455867>
+    };
+  stable brokers :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?DataBroker__533860612]];
+      var elementIndex : Nat__490723111
+    };
+  stable defaultNationalDebtConfig :
+    {
+      baselineDebtCents : Nat;
+      ratePerSecondCents : Nat;
+      referenceTimestamp : Nat;
+      usPopulation : Nat;
+      usTaxpayers : Nat
+    };
+  stable nationalDebtConfig :
+    {
+      baselineDebtCents : Nat;
+      ratePerSecondCents : Nat;
+      referenceTimestamp : Nat;
+      usPopulation : Nat;
+      usTaxpayers : Nat
+    };
+  stable var nextImageId : Nat;
+  stable platforms :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Platform__911205525]];
+      var elementIndex : Nat__490723111
+    };
+  stable storyboardImages :
+    {
+      var root : Node__46230540<Nat, StoryboardImage__4347003>;
+      var size : Nat__490723111
+    };
+  stable userProgress :
+    {
+      var root : Node__46230540<Principal, UserProfile__491224006>;
+      var size : Nat__490723111
+    }
+};

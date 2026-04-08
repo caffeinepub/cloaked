@@ -23,8 +23,12 @@ import { motion } from "motion/react";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import type { Page } from "../App";
-import { BrokerCategory, PlatformCategory, ProgressStatus } from "../backend";
 import { PrivacyScoreGauge } from "../components/PrivacyScoreGauge";
+import {
+  BrokerCategory,
+  PlatformCategory,
+  ProgressStatus,
+} from "../hooks/useQueries";
 import {
   useBrokersWithStatus,
   usePlatformsWithStatus,
